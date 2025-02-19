@@ -1,5 +1,6 @@
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom";
-import { Dashboard, NavBar } from "./components";
+import { Dashboard, NavBar, PageNotFound } from "./components";
+import { styles } from "./styles";
 
 export const App = () => {
     
@@ -9,9 +10,12 @@ export const App = () => {
                 <div className="relative z-0 bg-primary overflow-x-hidden">
                     <div className="w-full h-dvh bg-hero-pattern bg-cover bg-no-repeat bg-center">
                         <NavBar />
-                        <Routes>
-                            <Route path="/" element={<Dashboard />} />
-                        </Routes>
+                        <div className={`${styles.paddingX} relative w-full h-[calc(100%-120px)] mx-auto pt-7 inset-0 top-[120px] max-w-7xl`}>
+                            <Routes>
+                                <Route path="/" element={<Dashboard />} />
+                                <Route path="*" element={<PageNotFound />} />
+                            </Routes>
+                        </div>
                     </div>
                 </div>
             </Router>

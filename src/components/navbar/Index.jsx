@@ -30,11 +30,14 @@ const NavBar = () => {
                     </div>
                 </div>
                 {/* right hand side element - column 2 */}
-                <ul className="list-none hidden sm:flex flex-row gap-10">
+                <ul className="relative list-none hidden sm:flex flex-row gap-10">
                     {
                         NAV_LINKS.map((nav) => (
-                            <li key={nav.id} className={`${activeNav === nav.navLink ? 'text-white' : 'text-secondary'} hover:text-white text-[18px] font-medium cursor-pointer`}>
-                                <Link to={nav.navLink} onClick={() => dispatch(setActiveNav(nav.navLink))}>{nav.navName}</Link>
+                            <li key={nav.id} className={`${activeNav === nav.navLink ? 'text-white' : 'text-secondary'} hover:text-white text-[18px] font-medium cursor-pointer transition-all group`}>
+                                <Link to={nav.navLink} onClick={() => dispatch(setActiveNav(nav.navLink))} className="relative">
+                                    {nav.navName}
+                                    <span className="absolute left-0 bottom-0 w-full h-0.5 bg-white scale-x-0 transition-transform duration-300 group-hover:scale-x-100" />
+                                </Link>
                             </li>
                         ))
                     }
