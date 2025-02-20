@@ -15,15 +15,5 @@ export const NAV_LINKS = [
         id: 3,
         navName: "crop-records",
         navLink: "/crop-records"
-    },
-    {
-        id: 4,
-        navName: "work",
-        navLink: "/work"
-    },
-    {
-        id: 5,
-        navName: "expense",
-        navLink: "/expense"
     }
 ];

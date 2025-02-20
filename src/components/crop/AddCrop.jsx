@@ -2,18 +2,14 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { getCropByID, setCropFormData, setLoadingFlags } from "../../store/slices/cropSlice";
+import { getCropByID, saveCropFormData, setCropFormData, setLoadingFlags } from "../../store/slices/cropSlice";
 
 const AddCrop = () => {
     const {id} = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const cropFormData = useSelector((state) => {
-        return state.crop?.cropForm;
-    });
-    const loadingFlags = useSelector((state) => {
-        return state.crop?.loadingFlags;
-    })
+    const cropFormData = useSelector((state) => state.crop?.cropForm);
+    const loadingFlags = useSelector((state) => state.crop?.loadingFlags);
     const {register,handleSubmit,setValue,watch,formState: {errors}} = useForm({
         // set initial values from redux store
         defaultValues: cropFormData 
@@ -50,7 +46,7 @@ const AddCrop = () => {
     const onSubmit = (data) => {
         try {
             dispatch(setLoadingFlags({key: "isSaving",value: true}));
-            dispatch(setCropFormData(data));
+            dispatch(saveCropFormData(data));
             // after saving, go back to the previous page
             navigate(-1);
         } catch (error) {

@@ -1,6 +1,7 @@
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom";
-import { AddCrop, CropTable, Dashboard, NavBar, PageNotFound } from "./components";
+import { AddCrop, CropTable, Dashboard, NavBar, PageNotFound, ToastListener } from "./components";
 import { styles } from "./styles";
+import { Toaster } from "react-hot-toast";
 
 export const App = () => {
     
@@ -22,6 +23,20 @@ export const App = () => {
                     </div>
                 </div>
             </Router>
+            {/* 
+                <Toaster />:
+                - This is the main component from 'react-hot-toast'.
+                - It renders the toast notifications globally.
+                - Should be placed at the root level of the app to ensure all toasts are visible.
+            */}
+            <Toaster />
+            {/* 
+                <ToastListener />:
+                - A custom component that listens for Redux state changes related to toast messages.
+                - It ensures that toasts are triggered based on global state updates.
+                - Useful when toast messages need to be dispatched from Redux actions instead of directly in UI components.
+            */}
+            <ToastListener />
         </div>
     );
 }
