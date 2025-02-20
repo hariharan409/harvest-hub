@@ -24,7 +24,7 @@ const Dashboard = () => {
                             <div className="w-3 h-3 rounded-full bg-[#915EFF]" />
                             <div className='w-1 h-full violet-gradient' />
                         </div>
-                        <ul className="list-disc marker:text-white pl-5 overflow-y-auto my-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] text-[#915EFF] text-[20px] font-bold animate-pulse">
+                        <ul className="list-disc marker:text-white pl-5 overflow-y-auto my-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] text-[#915EFF] text-[20px] capitalize font-bold animate-pulse">
                             <li>peanut</li>
                             <li>chilli</li>
                         </ul>

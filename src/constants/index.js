@@ -9,15 +9,20 @@ export const NAV_LINKS = [
     {
         id: 2,
         navName: "crop",
-        navLink: "/crop"
+        navLink: "/crop-table"
     },
     {
         id: 3,
+        navName: "crop records",
+        navLink: "/crop-records"
+    },
+    {
+        id: 4,
         navName: "work",
         navLink: "/work"
     },
     {
-        id: 4,
+        id: 5,
         navName: "expense",
         navLink: "/expense"
     }

@@ -7,5 +7,5 @@ export {
     manikandan,
     //lottie
     appleTreeAnimation,
-    pageNotFound
+    pageNotFound,
 }

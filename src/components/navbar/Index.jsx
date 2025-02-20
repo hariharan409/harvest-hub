@@ -30,7 +30,7 @@ const NavBar = () => {
                     </div>
                 </div>
                 {/* right hand side element - column 2 */}
-                <ul className="relative list-none hidden sm:flex flex-row gap-10">
+                <ul className="relative list-none hidden lg:flex flex-row gap-10">
                     {
                         NAV_LINKS.map((nav) => (
                             <li key={nav.id} className={`${activeNav === nav.navLink ? 'text-white' : 'text-secondary'} hover:text-white text-[18px] font-medium cursor-pointer transition-all group`}>
