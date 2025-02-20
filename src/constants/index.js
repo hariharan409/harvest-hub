@@ -13,7 +13,7 @@ export const NAV_LINKS = [
     },
     {
         id: 3,
-        navName: "crop records",
+        navName: "crop-records",
         navLink: "/crop-records"
     },
     {

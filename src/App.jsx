@@ -15,6 +15,7 @@ export const App = () => {
                                 <Route path="/" element={<Dashboard />} />
                                 <Route path="/crop-table" element={<CropTable />} />
                                 <Route path="/add-crop" element={<AddCrop />} />
+                                <Route path="/add-crop/:id" element={<AddCrop />} />
                                 <Route path="*" element={<PageNotFound />} />
                             </Routes>
                         </div>
