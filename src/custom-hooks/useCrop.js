@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getCropByID, saveCropFormData, setCropFormData, setLoadingFlags } from "../store/slices/cropSlice";
+import { deleteCropById, getCropByID, saveCropFormData, setCropFormData, setLoadingFlags } from "../store/slices/cropSlice";
 
 
 const useCrop = (id) => {
@@ -10,6 +10,7 @@ const useCrop = (id) => {
     const dispatch = useDispatch();
     const cropFormData = useSelector((state) => state.crop?.cropForm);
     const loadingFlags = useSelector((state) => state.crop?.loadingFlags);
+    const cropList = useSelector((state) => state.crop.cropList);
     const {register,handleSubmit,setValue,watch,formState: {errors}} = useForm({
         // set initial values from redux store
         defaultValues: cropFormData 
@@ -40,6 +41,14 @@ const useCrop = (id) => {
         dispatch(saveCropFormData(data));
         navigate(-1);
     };
+    
+    const onNavigate = (path,id) => {
+        navigate(path+`/${id}`)
+    }
+
+    const onDeleteCrop = (id) => {
+        dispatch(deleteCropById(id));
+    }
 
     return {
         register,
@@ -48,7 +57,10 @@ const useCrop = (id) => {
         watch,
         errors,
         loadingFlags,
-        onSubmit
+        onSubmit,
+        cropList,
+        onNavigate,
+        onDeleteCrop
     };
 
 }

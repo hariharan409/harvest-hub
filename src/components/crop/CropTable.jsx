@@ -2,16 +2,11 @@ import { useSelector,useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { deleteCropById } from "../../store/slices/cropSlice";
 import {EpicButton} from "../index";
+import { useCrop } from "../../custom-hooks";
 
-export const CropTable = () => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const cropList = useSelector((state) => state.crop.cropList);
+export const CropTable = () => {    
+    const {cropList,onNavigate,onDeleteCrop} = useCrop();
 
-    const onNavigate = (path,id) => {
-        navigate(path+`/${id}`)
-    }
-    
     return(
         <div className="relative overflow-x-auto shadow-md max-h-[70%]">
             <table className="w-full bg-black-200 text-base text-center">
@@ -46,7 +41,7 @@ export const CropTable = () => {
                                 </td>
                                 <td className="px-6 py-4 border-x flex justify-center gap-x-4">
                                     <EpicButton label="edit" onClick={() => onNavigate("/add-crop",crop.id)} varient="greenVarient" />
-                                    <EpicButton label="delete" onClick={() => dispatch(deleteCropById(crop.id))} varient="redVarient" />
+                                    <EpicButton label="delete" onClick={() => onDeleteCrop(crop.id)} varient="redVarient" />
                                 </td>
                             </tr>
                         ))
