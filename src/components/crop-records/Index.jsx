@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { EpicButton } from "../global/button/Button";
+import {EpicButton} from "../index";
 import { CropRecordsTable } from "./CropRecordsTable";
 
 

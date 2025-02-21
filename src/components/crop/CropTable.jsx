@@ -1,8 +1,7 @@
 import { useSelector,useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { deleteCropById } from "../../store/slices/cropSlice";
-import { EpicButton } from "../global/button/Button";
-
+import {EpicButton} from "../index";
 
 export const CropTable = () => {
     const navigate = useNavigate();

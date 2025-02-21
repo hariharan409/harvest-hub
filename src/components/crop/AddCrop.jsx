@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { getCropByID, saveCropFormData, setCropFormData, setLoadingFlags } from "../../store/slices/cropSlice";
-import { EpicButton } from "../global/button/Button";
+import {EpicImageUpload, EpicTextInput,EpicButton} from "../index";
 
 const AddCrop = () => {
     const {id} = useParams();
@@ -55,62 +55,18 @@ const AddCrop = () => {
         }
     }
 
-    const onImageChange = async(event) => {
-        try {
-            const file = event.target.files?.[0];
-            if(file) {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => {
-                    const BASE64_STRING = reader.result;
-                    // Store Base64 in React Hook Form
-                    setValue("cropImage",BASE64_STRING);
-                }
-            }
-        } catch (error) {
-            console.log(error.message || error);
-        }
-    }
-
     return(
         <div className="bg-black-200 p-8 rounded-sm">
             <form onSubmit={handleSubmit(onSubmit)} className="mt-12 flex flex-col gap-8 capitalize">
                 {/* crop name field */}
-                <label className="flex flex-col">
-                    <span className='text-white font-medium mb-4'>crop name</span>
-                    <input 
-                        id="cropName"
-                        {...register("cropName",{required: "crop name is required"})}
-                        placeholder="what's the crop name?"
-                        className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium"
-                    />
-                    {errors.cropName && <p className="text-red-500 text-xs mt-1 ml-1">{errors.cropName.message}</p>}
-                </label>
+                <EpicTextInput label="crop name" name="cropName" register={register} validation={{required: "crop name is required"}} placeholder="what's the crop name?" errors={errors.cropName} />
                 {/* crop type field */}
-                <label className="flex flex-col">
-                    <span className='text-white font-medium mb-4'>crop type</span>
-                    <input 
-                        id="cropType"
-                        {...register("cropType",{required: "crop type is required"})}
-                        placeholder="what's the crop type?"
-                        className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium"
-                    />
-                    {errors.cropType && <p className="text-red-500 text-xs mt-1 ml-1">{errors.cropType.message}</p>}
-                </label>
+                <EpicTextInput label="crop type" name="cropType" register={register} validation={{required: "crop type is required"}} placeholder="what's the crop type?" errors={errors.cropType} />
                 {/* crop image field */}
-                <label className="flex flex-col">
-                    <span className='text-white font-medium mb-4'>upload image</span>
-                    <input 
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => onImageChange(e)}
-                        className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium"
-                    />
-                    {/* Hidden field to store Base64 */}
-                    <input type="hidden" {...register("cropImage", { required: "crop image is required" })} />
-                    {errors.cropImage && <p className="text-red-500 text-xs mt-1 ml-1">{errors.cropImage.message}</p>}
-                </label>
+                <EpicImageUpload label="upload image" name="cropImage" register={register} setValue={setValue} validation={{required: "crop image is required"}} errors={errors.cropImage} />
+                {/* image preview */}
                 <img src={watch("cropImage")} className="w-72 object-contain"/>
+                {/* save button */}
                 <div className="flex justify-end">
                     <EpicButton type="submit" label={loadingFlags.isSaving ? "saving..." : "save crop"} disabled={loadingFlags.isSaving} varient="greenVarient" customClassNames="w-36"/>
                 </div>

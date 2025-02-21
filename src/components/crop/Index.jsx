@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { CropTable } from "./CropTable";
-import { EpicButton } from "../global/button/Button";
+import {EpicButton} from "../index";
 
 const Crop = () => {
     const navigate = useNavigate();
