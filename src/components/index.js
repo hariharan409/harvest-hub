@@ -2,6 +2,7 @@ import Dashboard from "./dashboard/Index";
 import NavBar from "./navbar/Index";
 import PageNotFound from './page-not-found/Index';
 import CropTable from "./crop/Index";
+import CropRecordsTable from './crop-records/Index';
 import AddCrop from "./crop/AddCrop";
 import ToastListener from "./global/toast/ToastListener";
 
@@ -10,6 +11,7 @@ export {
     NavBar,
     PageNotFound,
     CropTable,
+    CropRecordsTable,
     AddCrop,
     ToastListener
 }

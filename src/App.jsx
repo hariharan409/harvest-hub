@@ -1,5 +1,5 @@
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom";
-import { AddCrop, CropTable, Dashboard, NavBar, PageNotFound, ToastListener } from "./components";
+import { AddCrop, CropRecordsTable, CropTable, Dashboard, NavBar, PageNotFound, ToastListener } from "./components";
 import { styles } from "./styles";
 import { Toaster } from "react-hot-toast";
 
@@ -17,6 +17,7 @@ export const App = () => {
                                 <Route path="/crop-table" element={<CropTable />} />
                                 <Route path="/add-crop" element={<AddCrop />} />
                                 <Route path="/add-crop/:id" element={<AddCrop />} />
+                                <Route path="/crop-records-table" element={<CropRecordsTable />} />
                                 <Route path="*" element={<PageNotFound />} />
                             </Routes>
                         </div>
