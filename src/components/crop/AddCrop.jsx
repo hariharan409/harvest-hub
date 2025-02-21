@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { getCropByID, saveCropFormData, setCropFormData, setLoadingFlags } from "../../store/slices/cropSlice";
+import { EpicButton } from "../global/button/Button";
 
 const AddCrop = () => {
     const {id} = useParams();
@@ -111,9 +112,7 @@ const AddCrop = () => {
                 </label>
                 <img src={watch("cropImage")} className="w-72 object-contain"/>
                 <div className="flex justify-end">
-                    <button type="submit" disabled={loadingFlags.isSaving} className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-8 py-3 mb-2 uppercase">
-                        {loadingFlags.isSaving ? "saving..." : "save crop"}
-                    </button>
+                    <EpicButton type="submit" label={loadingFlags.isSaving ? "saving..." : "save crop"} disabled={loadingFlags.isSaving} varient="greenVarient" customClassNames="w-36"/>
                 </div>
             </form>
         </div>
