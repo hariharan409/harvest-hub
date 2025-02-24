@@ -28,7 +28,8 @@ const EpicDatepicker: React.FC<EpicDatepickerProps> = ({label,name,register,setV
                 {...register(name,validation)}
                 selected={watch(name)}
                 onChange={onDateChange}
-                className="bg-tertiary"
+                className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium"
+                placeholderText={placeholder}
             />
             {errors && <p className="text-red-500 text-xs mt-1 ml-1">{errors.message}</p>}
         </label>

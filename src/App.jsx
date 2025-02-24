@@ -11,7 +11,7 @@ export const App = () => {
                 <div className="relative z-0 bg-primary overflow-x-hidden">
                     <div className="w-full h-dvh bg-hero-pattern bg-cover bg-no-repeat bg-center">
                         <NavBar />
-                        <div className={`${styles.paddingX} relative w-full h-[calc(100%-120px)] mx-auto pt-7 inset-0 top-[120px] max-w-7xl`}>
+                        <div className={`${styles.paddingX} relative w-full h-[calc(100%-120px)] mx-auto pt-7 inset-0 top-[120px] max-w-screen-2xl`}>
                             <Routes>
                                 <Route path="/" element={<Dashboard />} />
                                 <Route path="/crop-table" element={<CropTable />} />

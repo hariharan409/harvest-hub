@@ -22,8 +22,7 @@ const EpicSelectDropdown = <T,>({
     return(
         <label className="flex flex-col">
             <span className='text-white font-medium mb-4'>{label}</span>
-            <select id={name} {...register(name, validation)} className="bg-tertiary text-white px-4 py-2 text-ellipsis" >
-                <option value="" className="px-6">{placeholder}</option>
+            <select id={name} {...register(name, validation)} className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium" >
                 {list.map((option, index) => (
                 <option key={index} value={JSON.stringify(option[valueKey])}>
                     {option[displayKey] as string}
