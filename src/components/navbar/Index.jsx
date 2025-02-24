@@ -26,7 +26,7 @@ const NavBar = () => {
                         <p className='text-white text-[18px] font-bold cursor-pointer flex '>
                             Manikandan
                         </p>
-                        <p className="text-white-100 text-xs">Farm Owner</p>
+                        <p className="text-white-100 text-xs uppercase">dk farms</p>
                     </div>
                 </div>
                 {/* right hand side element - column 2 */}

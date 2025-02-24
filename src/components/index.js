@@ -4,11 +4,14 @@ import PageNotFound from './page-not-found/Index';
 import CropTable from "./crop/Index";
 import CropRecordsTable from './crop-records/Index';
 import AddCrop from "./crop/AddCrop";
+import AddCropRecords from "./crop-records/AddCropRecords";
 import ToastListener from "./reusable-components/toast/ToastListener";
 //reusable components
-import EpicTextInput from "./reusable-components/form-controls/TextInput";
+import EpicTextInput from "./reusable-components/form-controls/EpicTextInput";
 import EpicImageUpload from "./reusable-components/form-controls/EpicImageUpload";
 import EpicButton from "./reusable-components/button/Button";
+import EpicSelectDropdown from "./reusable-components/form-controls/EpicSelectDropdown";
+import EpicDatepicker from "./reusable-components/form-controls/EpicDatepicker";
 
 export {
     Dashboard,
@@ -17,9 +20,12 @@ export {
     CropTable,
     CropRecordsTable,
     AddCrop,
+    AddCropRecords,
     ToastListener,
     //reusable components
     EpicTextInput,
     EpicImageUpload,
-    EpicButton
+    EpicButton,
+    EpicSelectDropdown,
+    EpicDatepicker
 }

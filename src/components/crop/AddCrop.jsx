@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {EpicImageUpload, EpicTextInput,EpicButton} from "../index";
 import {useCrop} from "../../custom-hooks/index";
