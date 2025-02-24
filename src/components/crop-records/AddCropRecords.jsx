@@ -21,12 +21,12 @@ const AddCropRecords = () => {
                 <div className="flex justify-end">
                     <EpicButton label="add work" onClick={() => onAddWork()} varient="greenVarient" customClassNames="w-48" />
                 </div>
-                <div className="flex flex-col gap-5 border-4 border-black-100">
+                <div className="flex flex-col gap-5">
                     {
                         cropRecordsFormData.workDetails?.map((work,workIndex) => {
                             return(
-                                <div>
-                                    <div key={workIndex} className="flex flex-wrap items-end gap-5 p-3 bg-black-100">
+                                <div key={workIndex} className="border-4 border-purple-950 rounded-lg">
+                                    <div key={workIndex} className="flex flex-wrap items-end gap-5 p-3 bg-purple-950">
                                         <span className="text-2xl self-center">{workIndex + 1}).</span>
                                         {/* work type field */}
                                         <EpicTextInput label="work type" name={`workDetails[${workIndex}].workType`} register={register} validation={{required: `work type is required for row - ${workIndex + 1}`}} placeholder="what's the work type?" errors={(errors?.workDetails && errors?.workDetails[workIndex]) && errors?.workDetails[workIndex]?.workType}/>
@@ -34,7 +34,9 @@ const AddCropRecords = () => {
                                         <EpicTextInput label="work description" name={`workDetails[${workIndex}].workDescription`} register={register} validation={{required: `work description is required for row - ${workIndex + 1}`}} placeholder="what's the work description?" errors={(errors?.workDetails && errors?.workDetails[workIndex]) && errors?.workDetails[workIndex]?.workDescription} />
                                         {/* work date picker */}
                                         <EpicDatepicker label="work-date" name={`workDetails[${workIndex}].workDate`} register={register} setValue={setValue} watch={watch} validation={{required: `work date is required for row - ${workIndex + 1}`}} placeholder="pick the work date" errors={(errors?.workDetails && errors?.workDetails[workIndex]) && errors?.workDetails[workIndex]?.workDate}  />
-                                        <EpicButton label="add expense" onClick={() => onAddExpense(workIndex)} varient="greenVarient" customClassNames="w-48" />
+                                        <div className="flex-1 flex justify-center">
+                                            <EpicButton label="add expense" onClick={() => onAddExpense(workIndex)} varient="greenVarient" customClassNames="w-48" />
+                                        </div>
                                     </div>
 
                                     <div className="flex flex-col gap-5">
@@ -42,7 +44,7 @@ const AddCropRecords = () => {
                                         work.expenseList?.map((expense,expenseIndex) => {
                                             return(
                                                 <div key={expenseIndex} className="flex flex-wrap items-end gap-5 p-3">
-                                                    <span className="text-2xl self-center">{expenseIndex + 1}).</span>
+                                                    <span className="text-lg self-center">{expenseIndex + 1}).</span>
                                                     {/* expense type field */}
                                                     <EpicTextInput label="expense type" name={`workDetails[${workIndex}].expenseList[${expenseIndex}].expenseType`} register={register} validation={{required: `expense type is required for row - ${expenseIndex + 1}`}} placeholder="what's the expense type?" errors={(errors?.workDetails && errors?.workDetails[workIndex]?.expenseList[expenseIndex]) && errors?.workDetails[workIndex]?.expenseList[expenseIndex]?.expenseType}/>
                                                     {/* expense amount field */}
