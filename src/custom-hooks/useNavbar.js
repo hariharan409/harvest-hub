@@ -1,39 +1,42 @@
-import { useEffect } from "react";
-import { useDispatch,useSelector } from "react-redux";
+import { useEffect, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { setActiveNav, setScrolled } from "../store/slices/navbarSlice";
-
 
 const useNavbar = () => {
     const location = useLocation();
     const dispatch = useDispatch();
-    const {activeNav,scrolled} = useSelector((state) => state.navbar);
+    const { activeNav, scrolled } = useSelector((state) => state.navbar);
+
+    // Scroll event handler with useCallback to prevent unnecessary re-creations
+    const handleScroll = useCallback(() => {
+        dispatch(setScrolled(window.scrollY > 100));
+    }, [dispatch]);
 
     useEffect(() => {
-        const handleScroll = () => {
-            const scrollTop = window.scrollY;
-            // if scrollTop > 100 then the scrolled is true else false.
-            dispatch(setScrolled(scrollTop > 100));
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [handleScroll]);
+
+    // Update navbar based on route change
+    useEffect(() => {
+        const newNav = location.pathname === "/" ? "/" : location.pathname.split("/")[1] || "/";
+        if (activeNav !== newNav) {
+            dispatch(setActiveNav(newNav));
         }
-        window.addEventListener("scroll",handleScroll);
-        return () => window.removeEventListener("scroll",handleScroll);
-    },[dispatch]);
-
-    // Update navbar based on the route change
-    useEffect(() => {
-        // The navbar name should match the main URL name(1st index) or the '/'.
-        dispatch(setActiveNav(location.pathname === "/" ? location.pathname : location.pathname?.split("/")[1]));
-    },[location.pathname, dispatch]);
+    }, [location.pathname, activeNav, dispatch]);
 
     const onNavClick = (navLink) => {
-        dispatch(setActiveNav(navLink));
-    }
+        if (activeNav !== navLink) {
+            dispatch(setActiveNav(navLink));
+        }
+    };
 
     return {
         activeNav,
         scrolled,
-        onNavClick
-    }
-}
+        onNavClick,
+    };
+};
 
 export default useNavbar;
