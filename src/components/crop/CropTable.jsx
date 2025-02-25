@@ -1,6 +1,3 @@
-import { useSelector,useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { deleteCropById } from "../../store/slices/cropSlice";
 import {EpicButton} from "../index";
 import { useCrop } from "../../custom-hooks";
 

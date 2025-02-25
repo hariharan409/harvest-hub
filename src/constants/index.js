@@ -1,3 +1,4 @@
+import moment from "moment";
 
 
 export const NAV_LINKS = [
@@ -17,6 +18,38 @@ export const NAV_LINKS = [
         navLink: "/crop-records-table"
     }
 ];
+
+export const cropRecordsList = [
+    {
+        id: 1,
+        plantingDate: moment().subtract(3,"days").toString(),
+        cropID: 1,
+        workDetails: [
+            {
+                id: 1,
+                workType: "seeding",
+                workDate: moment().subtract(2,"days").toString(),
+                workDescription: "Planting seeds or sets at the correct depth and spacing.",
+                expenseList: [
+                    {
+                        id: 1,
+                        expenseType: "seed amount",
+                        expenseAmount: 3000,
+                        expenseDate: moment().toString(),
+                        expenseDescription: "Purchase of onion seeds"
+                    },
+                    {
+                        id: 2,
+                        expenseType: "Agricultural Supplies",
+                        expenseAmount: 500,
+                        expenseDate: moment().toString(),
+                        expenseDescription: "fertilizer for field seeding"
+                    },
+                ]
+            }
+        ],
+    }
+]
 
 export const cropList = [
     {

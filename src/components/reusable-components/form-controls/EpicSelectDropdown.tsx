@@ -16,7 +16,7 @@ interface EpicSelectDropdownProps<T> {
 
 
 const EpicSelectDropdown = <T,>({
-    label,name,list,register,validation,placeholder,errors,valueKey,displayKey
+    label,name,list,register,validation,errors,valueKey,displayKey
 }: EpicSelectDropdownProps<T>) => {
 
     return(
