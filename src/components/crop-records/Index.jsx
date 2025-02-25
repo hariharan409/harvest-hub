@@ -13,7 +13,7 @@ const CropRecords = () => {
     return(
         <div>
             <div className="flex justify-end">
-                <EpicButton label="add" onClick={() => onNavigate("/add-crop-records")} varient="greenVarient" />
+                <EpicButton label="add" onClick={() => onNavigate("/crop-records/add-crop-records")} varient="greenVarient" />
             </div>
             <CropRecordsTable />
         </div>

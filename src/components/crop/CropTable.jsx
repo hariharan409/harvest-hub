@@ -37,7 +37,7 @@ export const CropTable = () => {
                                     {crop.cropType}
                                 </td>
                                 <td className="px-6 py-4 border-x flex justify-center gap-x-4">
-                                    <EpicButton label="edit" onClick={() => onNavigate("/add-crop",crop.id)} varient="greenVarient" />
+                                    <EpicButton label="edit" onClick={() => onNavigate("/crop/add-crop",crop.id)} varient="greenVarient" />
                                     <EpicButton label="delete" onClick={() => onDeleteCrop(crop.id)} varient="redVarient" />
                                 </td>
                             </tr>

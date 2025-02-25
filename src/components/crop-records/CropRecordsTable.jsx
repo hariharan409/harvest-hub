@@ -45,7 +45,7 @@ export const CropRecordsTable = () => {
                                     {cropRecord.workDetails?.length}
                                 </td>
                                 <td className="px-6 py-4 border-x flex justify-center gap-x-4">
-                                    <EpicButton label="edit" onClick={() => onNavigate("/add-crop-records",cropRecord.id)} varient="greenVarient" />
+                                    <EpicButton label="edit" onClick={() => onNavigate("/crop-records/add-crop-records",cropRecord.id)} varient="greenVarient" />
                                     <EpicButton label="delete" onClick={() => onDeleteCropRecords(cropRecord.id)} varient="redVarient" />
                                 </td>
                             </tr>

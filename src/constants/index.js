@@ -10,12 +10,12 @@ export const NAV_LINKS = [
     {
         id: 2,
         navName: "crop",
-        navLink: "/crop-table"
+        navLink: "/crop/crop-table"
     },
     {
         id: 3,
         navName: "crop-records",
-        navLink: "/crop-records-table"
+        navLink: "/crop-records/crop-records-table"
     }
 ];
 

@@ -14,12 +14,12 @@ export const App = () => {
                         <div className={`${styles.paddingX} relative w-full h-[calc(100%-120px)] mx-auto pt-7 inset-0 top-[120px] max-w-screen-2xl`}>
                             <Routes>
                                 <Route path="/" element={<Dashboard />} />
-                                <Route path="/crop-table" element={<CropTable />} />
-                                <Route path="/add-crop" element={<AddCrop />} />
-                                <Route path="/add-crop/:id" element={<AddCrop />} />
-                                <Route path="/crop-records-table" element={<CropRecordsTable />} />
-                                <Route path="/add-crop-records" element={<AddCropRecords />} />
-                                <Route path="/add-crop-records/:id" element={<AddCropRecords />} />
+                                <Route path="/crop/crop-table" element={<CropTable />} />
+                                <Route path="/crop/add-crop" element={<AddCrop />} />
+                                <Route path="/crop/add-crop/:id" element={<AddCrop />} />
+                                <Route path="/crop-records/crop-records-table" element={<CropRecordsTable />} />
+                                <Route path="/crop-records/add-crop-records" element={<AddCropRecords />} />
+                                <Route path="/crop-records/add-crop-records/:id" element={<AddCropRecords />} />
                                 <Route path="*" element={<PageNotFound />} />
                             </Routes>
                         </div>

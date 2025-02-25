@@ -13,7 +13,8 @@ const NavBar = () => {
     const {activeNav} = useSelector((state) => state.navbar);
 
     useEffect(() => {
-        dispatch(setActiveNav(location.pathname));
+        // The navbar name should match the main URL name(1st index) or the '/'.
+        dispatch(setActiveNav(location.pathname === "/" ? location.pathname : location.pathname?.split("/")[1]));
     },[])
 
     return(
@@ -33,7 +34,7 @@ const NavBar = () => {
                 <ul className="relative list-none hidden lg:flex flex-row gap-10">
                     {
                         NAV_LINKS.map((nav) => (
-                            <li key={nav.id} className={`${activeNav === nav.navLink ? 'text-white' : 'text-secondary'} hover:text-white text-[18px] font-medium cursor-pointer transition-all group`}>
+                            <li key={nav.id} className={`${[nav.navLink,nav.navName].includes(activeNav) ? 'text-black bg-white font-sans rounded-sm' : 'text-secondary hover:text-white'} text-[18px] font-medium cursor-pointer transition-all group p-1`}>
                                 <Link to={nav.navLink} onClick={() => dispatch(setActiveNav(nav.navLink))} className="relative">
                                     {nav.navName}
                                     <span className="absolute left-0 bottom-0 w-full h-0.5 bg-white scale-x-0 transition-transform duration-300 group-hover:scale-x-100" />
