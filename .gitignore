@@ -1,2 +1,5 @@
-
+# ignored files from client
 client/node_modules
+
+# ignored files from server
+server/node_modules
