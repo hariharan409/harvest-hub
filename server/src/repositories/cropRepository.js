@@ -10,9 +10,9 @@ exports.saveCrop = async(crop) => {
     }
 }
 
-exports.updateCrop = async(id,crop) => {
+exports.updateCrop = async(_id,crop) => {
     try {
-        await Crop.findByIdAndUpdate(id,crop);
+        await Crop.findByIdAndUpdate(_id,crop);
     } catch (error) {
         throw new Error(error.message || error);
     }
@@ -27,18 +27,18 @@ exports.getCropList = async() => {
     }
 }
 
-exports.getCropById = async(id) => {
+exports.getCropById = async(_id) => {
     try {
-        const crop = await Crop.findById(id);
+        const crop = await Crop.findById(_id);
         return crop;
     } catch (error) {
         throw new Error(error.message || error);
     }
 }
 
-exports.deleteCropById = async(id) => {
+exports.deleteCropById = async(_id) => {
     try {
-        await Crop.findByIdAndDelete(id);
+        await Crop.findByIdAndDelete(_id);
     } catch (error) {
         throw new Error(error.message || error);
     }

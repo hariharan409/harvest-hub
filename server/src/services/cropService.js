@@ -21,17 +21,17 @@ exports.getCropList = async() => {
     }
 }
 
-exports.getCropById = async(id) => {
+exports.getCropById = async(_id) => {
     try {
-        return await cropRepository.getCropById(id);
+        return await cropRepository.getCropById(_id);
     } catch (error) {
         throw new Error(error.message || error);
     }
 }
 
-exports.deleteCropById = async(id) => {
+exports.deleteCropById = async(_id) => {
     try {
-        await cropRepository.deleteCropById(id);
+        await cropRepository.deleteCropById(_id);
     } catch (error) {
         throw new Error(error.message || error);
     }

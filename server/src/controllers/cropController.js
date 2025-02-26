@@ -23,11 +23,11 @@ exports.getCropList = async(_,response) => {
 
 exports.getCropById = async(request,response) => {
     try {
-        const {id} = request.query;
-        if(!id) {
+        const {_id} = request.query;
+        if(!_id) {
             throw new Error("crop id cannot be empty");
         }
-        const data = await cropService.getCropById(id);
+        const data = await cropService.getCropById(_id);
         sendResponse(response,200,true,"crop",data);
     } catch (error) {
         sendResponse(response,500,false,error.message || error,null);
@@ -36,11 +36,11 @@ exports.getCropById = async(request,response) => {
 
 exports.deleteCropById = async(request,response) => {
     try {
-        const {id} = request.query;
-        if(!id) {
+        const {_id} = request.query;
+        if(!_id) {
             throw new Error("crop id cannot be empty");
         }
-        await cropService.deleteCropById(id);
+        await cropService.deleteCropById(_id);
         sendResponse(response,200,true,"crop has deleted successfully",null);
     } catch (error) {
         sendResponse(response,500,false,error.message || error,null);

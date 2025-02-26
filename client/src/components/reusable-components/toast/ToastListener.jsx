@@ -12,7 +12,6 @@ const ToastListener = () => {
         if(message) {
             if (type === 'success') toast.success(message);
             if (type === 'error')   toast.error(message);
-            if (type === 'info')    toast.info(message);
 
             // automatically clear the toast message after it's displayed
             dispatch(clearToast());

@@ -2,10 +2,10 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { deleteCropById, getCropByID, getCropList, saveCropFormData, setCropFormData, setLoadingFlags } from "../store/slices/cropSlice";
+import { deleteCropById, getCropById, getCropList, saveCrop } from "../store/slices/cropSlice";
 
 
-const useCrop = (id) => {
+const useCrop = (_id) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const cropFormData = useSelector((state) => state.crop?.cropForm);
@@ -22,10 +22,10 @@ const useCrop = (id) => {
     }, [dispatch]);
 
     useEffect(() => {
-        if(id) {
-            dispatch(getCropByID(id));
+        if(_id) {
+            dispatch(getCropById(_id));
         }
-    }, [id, dispatch]);
+    }, [_id, dispatch]);
 
     useEffect(() => {
         if (cropFormData) {
@@ -35,15 +35,8 @@ const useCrop = (id) => {
         }
     }, [cropFormData, setValue]);
 
-    useEffect(() => {
-        return () => {
-            dispatch(setCropFormData({}));
-        };
-    }, [dispatch]);
-
-    const onSubmit = (data) => {
-        dispatch(setLoadingFlags({ key: "isSaving", value: true }));
-        dispatch(saveCropFormData(data));
+    const onSubmit = async(data) => {
+        await dispatch(saveCrop(data));
         navigate(-1);
     };
     

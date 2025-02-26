@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 // define the types for the toast state and action payload
 interface ToastState {
     message: string,
-    type?: "success" | "error" | "info";
+    type?: "success" | "error";
 }
 
 const initialState: ToastState = {

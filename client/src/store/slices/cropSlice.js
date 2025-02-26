@@ -1,32 +1,69 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { showToast } from "./toastSlice";
-import { getCropListApi } from "../../api/cropApi"; 
-
-export const saveCropFormData = (formData) => async(dispatch) => {
-    // Step 1: update state in the reducer (state changes via setCropFormData)
-    dispatch(setCropFormData(formData));
-    // Step 2: dispatch the toast notification
-    dispatch(showToast({message: "Crop has saved successfully",type: "success"}));
-};
+import { getCropListApi,getCropByIdApi,saveCropApi,deleteCropByIdApi } from "../../api/cropApi"; 
 
 export const getCropList = createAsyncThunk(
     "crop/get-crop-list",
-    async(_,{rejectWithValue}) => {
+    async(_,{dispatch,rejectWithValue}) => {
         try {
             const {data} = await getCropListApi();
             return data;
         } catch (error) {
-            rejectWithValue(error.message || error);
+            const errorMessage = (error.message || error);
+            dispatch(showToast({message: errorMessage,type: "error"}));
+            return rejectWithValue(errorMessage);
         }
     }
-)
+);
+
+export const getCropById = createAsyncThunk(
+    "crop/get-crop-by-id",
+    async(_id,{dispatch,rejectWithValue}) => {
+        try {
+            const {data} = await getCropByIdApi(_id);
+            return data;
+        } catch (error) {
+            const errorMessage = (error.message || error);
+            dispatch(showToast({message: errorMessage,type: "error"}));
+            return rejectWithValue(errorMessage);
+        }
+    }
+);
+
+export const saveCrop = createAsyncThunk(
+    "crop/save-crop", async(formData,{dispatch,rejectWithValue}) => {
+        try {
+            await saveCropApi(formData);
+            dispatch(showToast({message: "Crop has saved successfully",type: "success"}));
+        } catch (error) {
+            const errorMessage = (error.message || error);
+            dispatch(showToast({message: errorMessage,type: "error"}));
+            return rejectWithValue(errorMessage);
+        }
+    }
+);
+
+export const deleteCropById = createAsyncThunk(
+    "crop/delete-crop-by-id",
+    async(_id,{dispatch,rejectWithValue}) => {
+        try {
+            await deleteCropByIdApi(_id);
+            dispatch(showToast({message: "Crop has deleted successfully",type: "success"}));
+            await dispatch(getCropList());
+        } catch (error) {
+            const errorMessage = (error.message || error);
+            dispatch(showToast({message: errorMessage,type: "error"}));
+            return rejectWithValue(errorMessage);
+        }
+    }
+);
 
 // Create a slice for the form
 const cropSlice = createSlice({
     name: "crop",
     initialState: {
         cropForm: {
-            id: null,
+            _id: null,
             cropName: "",
             cropType: "",
             cropImage: null
@@ -37,37 +74,9 @@ const cropSlice = createSlice({
             isAwaitingResponse: false
         }
     },
-    reducers: {
-        setCropFormData: (state,action) => {
-            // directly mutate the state, and it will be updated immutably by immer
-            state.cropForm =  {
-                ...state.form,
-                ...action.payload
-            };
-            state.loadingFlags.isSaving = false;
-        },
-        setLoadingFlags: (state,action) => {
-            state.loadingFlags = {
-                ...state.loadingFlags,
-                [action.payload.key]: action.payload.value
-            }
-        },
-        getCropByID: (state,action) => {
-            const cropId = Number(action.payload); // Ensure it's a number
-            const cropForm = state.cropList.find((crop) => crop.id === cropId);
-            if(cropForm) {
-                state.cropForm = cropForm;
-            }
-        },
-        deleteCropById: (state,action) => {
-            const cropId = Number(action.payload); // Ensure it's a number
-            let index = state.cropList.findIndex((crop) => crop.id === cropId);
-            if(index !== -1) {
-                state.cropList.splice(index,1);
-            }
-        }
-    },
+    reducers: {},
     extraReducers: (builder) => {
+        /* crop/get-crop-list api call */
         builder
         .addCase(getCropList.pending,(state) => {
             state.loadingFlags.isAwaitingResponse = true;
@@ -76,13 +85,51 @@ const cropSlice = createSlice({
             state.loadingFlags.isAwaitingResponse = false;
             state.cropList = action.payload;
         })
-        .addCase(getCropList.rejected,(state,action) => {
+        .addCase(getCropList.rejected,(state) => {
             state.loadingFlags.isAwaitingResponse = false;
-            dispatch(showToast({message: action.payload,type: "error"}));
+        });
+        /* crop/get-crop-by-id api call */
+        builder
+        .addCase(getCropById.pending,(state) => {
+            state.loadingFlags.isAwaitingResponse = true;
         })
-        
+        .addCase(getCropById.fulfilled,(state,action) => {
+            state.loadingFlags.isAwaitingResponse = false;
+            // directly mutate the state, and it will be updated immutably by immer
+            state.cropForm = {
+                ...state.cropForm,
+                ...action.payload
+            };
+        })
+        .addCase(getCropById.rejected,(state) => {
+            state.loadingFlags.isAwaitingResponse = false;
+        });
+
+        /* crop/save-crop api call */
+        builder
+        .addCase(saveCrop.pending,(state) => {
+            state.loadingFlags.isSaving = true;
+        })
+        .addCase(saveCrop.fulfilled,(state) => {
+            state.loadingFlags.isSaving = false;
+            state.cropForm = {};
+        })
+        .addCase(saveCrop.rejected,(state) => {
+            state.loadingFlags.isSaving = false;
+        });
+
+        /* crop/delete-crop-by-id api call */
+        builder
+        .addCase(deleteCropById.pending,(state) => {
+            state.loadingFlags.isAwaitingResponse = true;
+        })
+        .addCase(deleteCropById.fulfilled,(state) => {
+            state.loadingFlags.isAwaitingResponse = false;
+        })
+        .addCase(deleteCropById.rejected,(state) => {
+            state.loadingFlags.isAwaitingResponse = false;
+        });
     }
 });
 
-export const {setCropFormData,setLoadingFlags,getCropByID,deleteCropById} = cropSlice.actions;
 export default cropSlice.reducer;
