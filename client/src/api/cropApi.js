@@ -35,7 +35,7 @@ export const saveCropApi = async(formData) => {
 
 export const deleteCropByIdApi = async(_id) => {
     try {
-        const response = await axiosInstance.get("crop/delete-crop-by-id",{
+        const response = await axiosInstance.delete("crop/delete-crop-by-id",{
             params: new URLSearchParams({_id: _id})
         });
         return response.data;
