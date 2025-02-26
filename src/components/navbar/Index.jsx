@@ -25,7 +25,7 @@ const NavBar = () => {
                 <ul className="relative list-none hidden lg:flex flex-row gap-10">
                     {
                         NAV_LINKS.map((nav) => (
-                            <li key={nav.id} className={`${[nav.navLink,nav.navName].includes(activeNav) ? 'text-black bg-white font-sans rounded-sm' : 'text-secondary hover:text-white'} text-[18px] font-medium cursor-pointer transition-all group p-1`}>
+                            <li key={nav.id} className={`${[nav.navLink,nav.navName].includes(activeNav) ? 'text-white bg-tertiary rounded-md' : 'text-secondary hover:text-white'} text-[18px] font-medium cursor-pointer transition-all group px-3 py-2`}>
                                 <Link to={nav.navLink} onClick={() => onNavClick(nav.navLink)} className="relative">
                                     {nav.navName}
                                     <span className="absolute left-0 bottom-0 w-full h-0.5 bg-white scale-x-0 transition-transform duration-300 group-hover:scale-x-100" />
