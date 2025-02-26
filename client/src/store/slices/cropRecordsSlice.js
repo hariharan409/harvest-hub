@@ -27,7 +27,7 @@ const cropRecordsSlice = createSlice({
     name: "crop-records-slice",
     initialState: {
         cropRecordsForm: {
-            id: null,
+            _id: null,
             cropID: null,
             plantingDate: null,
             workDetails: [],

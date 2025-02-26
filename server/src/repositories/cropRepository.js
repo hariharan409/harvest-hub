@@ -1,4 +1,4 @@
-const { Crop } = require("../models/cropModels");
+const { Crop } = require("../models/cropModel");
 
 
 exports.saveCrop = async(crop) => {
