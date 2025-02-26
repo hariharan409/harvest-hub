@@ -25,8 +25,8 @@ export const CropTable = () => {
                 </thead>
                 <tbody>
                     {
-                        cropList.map((crop,index) => (
-                            <tr key={crop.id} className="capitalize border-y text-[#915EFF]">
+                        cropList?.map((crop,index) => (
+                            <tr key={crop._id} className="capitalize border-y text-[#915EFF]">
                                 <td className="px-6 py-4 border-x">
                                     {index + 1}
                                 </td>
@@ -37,8 +37,8 @@ export const CropTable = () => {
                                     {crop.cropType}
                                 </td>
                                 <td className="px-6 py-4 border-x flex justify-center gap-x-4">
-                                    <EpicButton label="edit" onClick={() => onNavigate("/crop/add-crop",crop.id)} varient="greenVarient" />
-                                    <EpicButton label="delete" onClick={() => onDeleteCrop(crop.id)} varient="redVarient" />
+                                    <EpicButton label="edit" onClick={() => onNavigate("/crop/add-crop",crop._id)} varient="greenVarient" />
+                                    <EpicButton label="delete" onClick={() => onDeleteCrop(crop._id)} varient="redVarient" />
                                 </td>
                             </tr>
                         ))

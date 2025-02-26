@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { showToast } from "./toastSlice";
-import { cropList } from "../../constants";
+import { getCropListApi } from "../../api/cropApi"; 
 
 export const saveCropFormData = (formData) => async(dispatch) => {
     // Step 1: update state in the reducer (state changes via setCropFormData)
@@ -8,6 +8,18 @@ export const saveCropFormData = (formData) => async(dispatch) => {
     // Step 2: dispatch the toast notification
     dispatch(showToast({message: "Crop has saved successfully",type: "success"}));
 };
+
+export const getCropList = createAsyncThunk(
+    "crop/get-crop-list",
+    async(_,{rejectWithValue}) => {
+        try {
+            const {data} = await getCropListApi();
+            return data;
+        } catch (error) {
+            rejectWithValue(error.message || error);
+        }
+    }
+)
 
 // Create a slice for the form
 const cropSlice = createSlice({
@@ -19,7 +31,7 @@ const cropSlice = createSlice({
             cropType: "",
             cropImage: null
         },
-        cropList: cropList,
+        cropList: [],
         loadingFlags: {
             isSaving: false, // specific state for saving data
             isAwaitingResponse: false
@@ -54,6 +66,21 @@ const cropSlice = createSlice({
                 state.cropList.splice(index,1);
             }
         }
+    },
+    extraReducers: (builder) => {
+        builder
+        .addCase(getCropList.pending,(state) => {
+            state.loadingFlags.isAwaitingResponse = true;
+        })
+        .addCase(getCropList.fulfilled,(state,action) => {
+            state.loadingFlags.isAwaitingResponse = false;
+            state.cropList = action.payload;
+        })
+        .addCase(getCropList.rejected,(state,action) => {
+            state.loadingFlags.isAwaitingResponse = false;
+            dispatch(showToast({message: action.payload,type: "error"}));
+        })
+        
     }
 });
 

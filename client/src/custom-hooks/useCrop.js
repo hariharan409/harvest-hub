@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { deleteCropById, getCropByID, saveCropFormData, setCropFormData, setLoadingFlags } from "../store/slices/cropSlice";
+import { deleteCropById, getCropByID, getCropList, saveCropFormData, setCropFormData, setLoadingFlags } from "../store/slices/cropSlice";
 
 
 const useCrop = (id) => {
@@ -15,6 +15,11 @@ const useCrop = (id) => {
         // set initial values from redux store
         defaultValues: cropFormData 
     });
+
+    // Fetch crops on component mount
+    useEffect(() => {
+        dispatch(getCropList());
+    }, [dispatch]);
 
     useEffect(() => {
         if(id) {
