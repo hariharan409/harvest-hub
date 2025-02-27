@@ -7,8 +7,15 @@ const app = express();
 dotenv.config();
 const PORT = process.env.APP_PORT;
 
+// Set CORS options
+const CORS_OPTIONS = {
+    origin: 'https://harvest-hub-client-lyart.vercel.app/', // frontend and the backend hosted on different domain, so maually handling the cors
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  };
+
 // Enable CORS for all routes
-app.use(cors());
+app.use(cors(CORS_OPTIONS));
 // db connection
 connectDB();
 // middleware to handle post & put request. payload size - 50mb
