@@ -20,7 +20,14 @@ exports.updateCrop = async(_id,crop) => {
 
 exports.getCropList = async() => {
     try {
-        const cropList = await Crop.find({});
+        // const cropList = await Crop.find({});
+        const cropList = [
+            {
+                id: 1,
+                cropName: "onion",
+                cropType: "vegetables"
+            }
+        ]
         return cropList;
     } catch (error) {
         throw new Error(error.message || error);
