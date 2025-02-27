@@ -11,6 +11,7 @@ app.post("/save-crop",cropController.saveCrop);
 
 /* delete request */
 app.delete("/delete-crop-by-id",cropController.deleteCropById);
+app.get("/test",() => console.log("fucking mad bro. it's working"))
 
 
 module.exports = app;
