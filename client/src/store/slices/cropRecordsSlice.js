@@ -76,7 +76,8 @@ const cropRecordsSlice = createSlice({
         loadingFlags: {
             isSaving: false, // specific state for saving data
             isAwaitingResponse: false
-        }
+        },
+        refreshState: JSON.parse(JSON.stringify(cropRecordObject)) // deep copy
     },
     reducers: {
         addWorkRow: (state,_) => {
@@ -98,6 +99,9 @@ const cropRecordsSlice = createSlice({
                 state.cropRecordsForm.workDetails[action.payload.workIndex]?.expenseList.splice(action.payload.expenseIndex,1);
             }
         },
+        refreshCropRecordForm: (state) => {
+            state.cropRecordsForm = state.refreshState;
+        }
     },
     extraReducers: (builder) => {
         /* crop-record/get-crop-record-list api call */
@@ -137,7 +141,7 @@ const cropRecordsSlice = createSlice({
         })
         .addCase(saveCropRecord.fulfilled,(state) => {
             state.loadingFlags.isSaving = false;
-            state.cropRecordsForm = JSON.parse(JSON.stringify(cropRecordObject)); // deep copy
+            state.cropRecordsForm = state.refreshState;
         })
         .addCase(saveCropRecord.rejected,(state) => {
             state.loadingFlags.isSaving = false;
@@ -157,5 +161,5 @@ const cropRecordsSlice = createSlice({
     }
 });
 
-export const {addWorkRow,removeWorkRow,addExpenseRow,removeExpenseRow} = cropRecordsSlice.actions; 
+export const {addWorkRow,removeWorkRow,addExpenseRow,removeExpenseRow,refreshCropRecordForm} = cropRecordsSlice.actions; 
 export default cropRecordsSlice.reducer;

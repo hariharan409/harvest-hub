@@ -7,7 +7,26 @@ const expenseSchema = new mongoose.Schema({
     },
     expenseAmount: {
         type: Number,
-        required: true
+        required: true,
+        min: [0,"amount cannot be negative"]
+    },
+    settledAmount: {
+        type: Number,
+        default: 0,
+        validate: {
+            validator: function(value) {
+                console.log(value,this.expenseAmount)
+                /* ensure that the settled amount is not greater than the total expense amount */
+                return value <= this.expenseAmount;
+            },
+            message: "settled amount cannot be greater than the expense amount"
+        }
+    },
+    pendingAmount: {
+        type: Number,
+        default: function() {
+            return this.expenseAmount - this.settledAmount
+        }
     },
     expenseDate: {
         type: Date,

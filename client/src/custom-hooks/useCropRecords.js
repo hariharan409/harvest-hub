@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { addWorkRow,addExpenseRow,removeWorkRow,removeExpenseRow, getCropRecordList, getCropRecordById, saveCropRecord, deleteCropRecordById } from "../store/slices/cropRecordsSlice";
+import { addWorkRow,addExpenseRow,removeWorkRow,removeExpenseRow, getCropRecordList, getCropRecordById, saveCropRecord, deleteCropRecordById,refreshCropRecordForm } from "../store/slices/cropRecordsSlice";
 
 
 const useCropRecords = (_id) => {
@@ -28,16 +28,23 @@ const useCropRecords = (_id) => {
     }, [_id, dispatch]);
 
     useEffect(() => {
-        if(cropRecordsFormData) {
+        if(cropRecordsFormData && _id) {
             Object.entries(cropRecordsFormData).forEach(([key,value]) => {
                 setValue(key,value);
             });
         }
     },[cropRecordsFormData,setValue]);
 
+    useEffect(() => {
+        return () => dispatch(refreshCropRecordForm());
+    },[]);
+
     const onSubmit = async(data) => {  
-        await dispatch(saveCropRecord(data));
-        navigate(-1);
+        const response = await dispatch(saveCropRecord(data));
+        console.log(response);
+        if(saveCropRecord.fulfilled.match(response)) {
+            navigate(-1);
+        }
     };
 
     const onDeleteCropRecords = (id) => {
