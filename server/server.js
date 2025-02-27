@@ -16,6 +16,6 @@ app.use(express.json({limit: "50mb"}));
 // api-routes
 app.use("/harvest-hub",mainRouter);
 
-app.listen(PORT,() => {
+app.listen(PORT,"0.0.0.0",() => {
     console.log(`harvest hub server running on port ${PORT}`);
 });
