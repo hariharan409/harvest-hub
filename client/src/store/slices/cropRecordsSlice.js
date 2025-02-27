@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { showToast } from "./toastSlice";
-import { deleteCropRecordByIdApi, getCropRecordByIdApi, getCropRecordListApi, saveCropRecordApi } from "../../api/cropRecordApi";
+import cropRecordApi from "../../api/cropRecordApi";
 
 export const getCropRecordList = createAsyncThunk("crop-record/get-crop-record-list",async(_,{dispatch,rejectWithValue}) => {
     try {
-        const {data} = await getCropRecordListApi();
+        const {data} = await cropRecordApi.getCropRecordListApi();
         return data;
     } catch (error) {
         const errorMessage = (error.message || error);
@@ -15,7 +15,7 @@ export const getCropRecordList = createAsyncThunk("crop-record/get-crop-record-l
 
 export const getCropRecordById = createAsyncThunk("crop-record/get-crop-record-by-id",async(_id,{dispatch,rejectWithValue}) => {
     try {
-        const {data} = await getCropRecordByIdApi(_id);
+        const {data} = await cropRecordApi.getCropRecordByIdApi(_id);
         return data;
     } catch (error) {
         const errorMessage = (error.message || error);
@@ -26,7 +26,7 @@ export const getCropRecordById = createAsyncThunk("crop-record/get-crop-record-b
 
 export const saveCropRecord = createAsyncThunk("crop-record/save-crop-record", async(formData,{dispatch,rejectWithValue}) => {
     try {
-        await saveCropRecordApi(formData);
+        await cropRecordApi.saveCropRecordApi(formData);
         dispatch(showToast({message: "crop record has saved successfully",type: "success"}));
     } catch (error) {
         const errorMessage = (error.message || error);
@@ -37,7 +37,7 @@ export const saveCropRecord = createAsyncThunk("crop-record/save-crop-record", a
 
 export const deleteCropRecordById = createAsyncThunk("crop-record/delete-crop-record-by-id",async(_id,{dispatch,rejectWithValue}) => {
     try {
-        await deleteCropRecordByIdApi(_id);
+        await cropRecordApi.deleteCropRecordByIdApi(_id);
         dispatch(showToast({message: "crop record has deleted successfully",type: "success"}));
         await dispatch(getCropRecordList());
     } catch (error) {

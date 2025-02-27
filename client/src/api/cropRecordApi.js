@@ -1,7 +1,7 @@
 import { axiosInstance } from "./axiosInstance";
 
 
-export const getCropRecordListApi = async() => {
+const getCropRecordListApi = async() => {
     try {
         const response = await axiosInstance.get("crop-record/get-crop-record-list");
         return response.data;
@@ -11,7 +11,7 @@ export const getCropRecordListApi = async() => {
     }
 }
 
-export const getCropRecordByIdApi = async(_id) => {
+const getCropRecordByIdApi = async(_id) => {
     try {
         const response = await axiosInstance.get("crop-record/get-crop-record-by-id",{
             params: new URLSearchParams({_id: _id})
@@ -23,7 +23,7 @@ export const getCropRecordByIdApi = async(_id) => {
     }
 }
 
-export const saveCropRecordApi = async(formData) => {
+const saveCropRecordApi = async(formData) => {
     try {
         const response = await axiosInstance.post("crop-record/save-crop-record",formData);
         return response.data;
@@ -33,7 +33,7 @@ export const saveCropRecordApi = async(formData) => {
     }
 }
 
-export const deleteCropRecordByIdApi = async(_id) => {
+const deleteCropRecordByIdApi = async(_id) => {
     try {
         const response = await axiosInstance.delete("crop-record/delete-crop-record-by-id",{
             params: new URLSearchParams({_id: _id})
@@ -43,4 +43,11 @@ export const deleteCropRecordByIdApi = async(_id) => {
         const errorMessage = error?.response?.data.message || error.message || error;
         throw new Error(errorMessage);
     }
+}
+
+export default {
+    getCropRecordListApi,
+    getCropRecordByIdApi,
+    saveCropRecordApi,
+    deleteCropRecordByIdApi
 }
