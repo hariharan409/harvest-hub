@@ -15,7 +15,7 @@ const AddCropRecords = () => {
                 {/* row-1 crop records*/}
                 <div className="flex gap-8">
                     <div className="w-48">
-                        <EpicSelectDropdown label="select crop" name="cropID" list={cropList} valueKey="id" displayKey="cropName" register={register} validation={{required: "crop name is required"}} placeholder="what's the crop name?" errors={errors.cropID} />
+                        <EpicSelectDropdown label="select crop" name="cropID" list={cropList} valueKey="_id" displayKey="cropName" register={register} validation={{required: "crop name is required"}} placeholder="what's the crop name?" errors={errors.cropID} />
                     </div>
                     <EpicDatepicker label="planting-date" name="plantingDate" register={register} setValue={setValue} watch={watch} validation={{required: "planting date is required"}} placeholder="pick the planting date" errors={errors.plantingDate}  />
                 </div>

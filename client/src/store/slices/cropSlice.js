@@ -2,61 +2,50 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { showToast } from "./toastSlice";
 import { getCropListApi,getCropByIdApi,saveCropApi,deleteCropByIdApi } from "../../api/cropApi"; 
 
-export const getCropList = createAsyncThunk(
-    "crop/get-crop-list",
-    async(_,{dispatch,rejectWithValue}) => {
-        try {
-            const {data} = await getCropListApi();
-            return data;
-        } catch (error) {
-            const errorMessage = (error.message || error);
-            dispatch(showToast({message: errorMessage,type: "error"}));
-            return rejectWithValue(errorMessage);
-        }
+export const getCropList = createAsyncThunk("crop/get-crop-list",async(_,{dispatch,rejectWithValue}) => {
+    try {
+        const {data} = await getCropListApi();
+        return data;
+    } catch (error) {
+        const errorMessage = (error.message || error);
+        dispatch(showToast({message: errorMessage,type: "error"}));
+        return rejectWithValue(errorMessage);
     }
-);
+});
 
-export const getCropById = createAsyncThunk(
-    "crop/get-crop-by-id",
-    async(_id,{dispatch,rejectWithValue}) => {
-        try {
-            const {data} = await getCropByIdApi(_id);
-            return data;
-        } catch (error) {
-            const errorMessage = (error.message || error);
-            dispatch(showToast({message: errorMessage,type: "error"}));
-            return rejectWithValue(errorMessage);
-        }
+export const getCropById = createAsyncThunk("crop/get-crop-by-id",async(_id,{dispatch,rejectWithValue}) => {
+    try {
+        const {data} = await getCropByIdApi(_id);
+        return data;
+    } catch (error) {
+        const errorMessage = (error.message || error);
+        dispatch(showToast({message: errorMessage,type: "error"}));
+        return rejectWithValue(errorMessage);
     }
-);
+});
 
-export const saveCrop = createAsyncThunk(
-    "crop/save-crop", async(formData,{dispatch,rejectWithValue}) => {
-        try {
-            await saveCropApi(formData);
-            dispatch(showToast({message: "Crop has saved successfully",type: "success"}));
-        } catch (error) {
-            const errorMessage = (error.message || error);
-            dispatch(showToast({message: errorMessage,type: "error"}));
-            return rejectWithValue(errorMessage);
-        }
+export const saveCrop = createAsyncThunk("crop/save-crop", async(formData,{dispatch,rejectWithValue}) => {
+    try {
+        await saveCropApi(formData);
+        dispatch(showToast({message: "Crop has saved successfully",type: "success"}));
+    } catch (error) {
+        const errorMessage = (error.message || error);
+        dispatch(showToast({message: errorMessage,type: "error"}));
+        return rejectWithValue(errorMessage);
     }
-);
+});
 
-export const deleteCropById = createAsyncThunk(
-    "crop/delete-crop-by-id",
-    async(_id,{dispatch,rejectWithValue}) => {
-        try {
-            await deleteCropByIdApi(_id);
-            dispatch(showToast({message: "Crop has deleted successfully",type: "success"}));
-            await dispatch(getCropList());
-        } catch (error) {
-            const errorMessage = (error.message || error);
-            dispatch(showToast({message: errorMessage,type: "error"}));
-            return rejectWithValue(errorMessage);
-        }
+export const deleteCropById = createAsyncThunk("crop/delete-crop-by-id",async(_id,{dispatch,rejectWithValue}) => {
+    try {
+        await deleteCropByIdApi(_id);
+        dispatch(showToast({message: "Crop has deleted successfully",type: "success"}));
+        await dispatch(getCropList());
+    } catch (error) {
+        const errorMessage = (error.message || error);
+        dispatch(showToast({message: errorMessage,type: "error"}));
+        return rejectWithValue(errorMessage);
     }
-);
+});
 
 // Create a slice for the form
 const cropSlice = createSlice({

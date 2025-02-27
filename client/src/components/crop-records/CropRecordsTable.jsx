@@ -31,7 +31,7 @@ export const CropRecordsTable = () => {
                 <tbody>
                     {
                         cropRecordsList.map((cropRecord,index) => (
-                            <tr key={cropRecord.id} className="capitalize border-y text-[#915EFF]">
+                            <tr key={cropRecord._id} className="capitalize border-y text-[#915EFF]">
                                 <td className="px-6 py-4 border-x">
                                     {index + 1}
                                 </td>
@@ -39,14 +39,14 @@ export const CropRecordsTable = () => {
                                     {cropRecord.cropID}
                                 </td>
                                 <td className="px-6 py-4 border-x">
-                                    {moment(cropRecord.plantingDate,"ddd MMM DD YYYY HH:mm:ss [GMT]ZZ").format("DD-MMM-YYYY")}
+                                    {moment(cropRecord.plantingDate).format("DD-MMM-YYYY")}
                                 </td>
                                 <td className="px-6 py-4 border-x">
                                     {cropRecord.workDetails?.length}
                                 </td>
                                 <td className="px-6 py-4 border-x flex justify-center gap-x-4">
-                                    <EpicButton label="edit" onClick={() => onNavigate("/crop-records/add-crop-records",cropRecord.id)} varient="greenVarient" />
-                                    <EpicButton label="delete" onClick={() => onDeleteCropRecords(cropRecord.id)} varient="redVarient" />
+                                    <EpicButton label="edit" onClick={() => onNavigate("/crop-records/add-crop-records",cropRecord._id)} varient="greenVarient" />
+                                    <EpicButton label="delete" onClick={() => onDeleteCropRecords(cropRecord._id)} varient="redVarient" />
                                 </td>
                             </tr>
                         ))

@@ -1,6 +1,58 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { cropRecordsList } from "../../constants";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { showToast } from "./toastSlice";
+import { deleteCropRecordByIdApi, getCropRecordByIdApi, getCropRecordListApi, saveCropRecordApi } from "../../api/cropRecordApi";
+
+export const getCropRecordList = createAsyncThunk("crop-record/get-crop-record-list",async(_,{dispatch,rejectWithValue}) => {
+    try {
+        const {data} = await getCropRecordListApi();
+        return data;
+    } catch (error) {
+        const errorMessage = (error.message || error);
+        dispatch(showToast({message: errorMessage,type: "error"}));
+        return rejectWithValue(errorMessage);
+    }
+});
+
+export const getCropRecordById = createAsyncThunk("crop-record/get-crop-record-by-id",async(_id,{dispatch,rejectWithValue}) => {
+    try {
+        const {data} = await getCropRecordByIdApi(_id);
+        return data;
+    } catch (error) {
+        const errorMessage = (error.message || error);
+        dispatch(showToast({message: errorMessage,type: "error"}));
+        return rejectWithValue(errorMessage);
+    }
+});
+
+export const saveCropRecord = createAsyncThunk("crop-record/save-crop-record", async(formData,{dispatch,rejectWithValue}) => {
+    try {
+        await saveCropRecordApi(formData);
+        dispatch(showToast({message: "crop record has saved successfully",type: "success"}));
+    } catch (error) {
+        const errorMessage = (error.message || error);
+        dispatch(showToast({message: errorMessage,type: "error"}));
+        return rejectWithValue(errorMessage);
+    }
+});
+
+export const deleteCropRecordById = createAsyncThunk("crop-record/delete-crop-record-by-id",async(_id,{dispatch,rejectWithValue}) => {
+    try {
+        await deleteCropRecordByIdApi(_id);
+        dispatch(showToast({message: "crop record has deleted successfully",type: "success"}));
+        await dispatch(getCropRecordList());
+    } catch (error) {
+        const errorMessage = (error.message || error);
+        dispatch(showToast({message: errorMessage,type: "error"}));
+        return rejectWithValue(errorMessage);
+    }
+});
+
+const cropRecordObject = {
+    _id: null,
+    cropID: null,
+    plantingDate: null,
+    workDetails: [],
+}
 
 const workObject = {
     workType: null,
@@ -16,23 +68,11 @@ const expenseObject = {
     expenseDescription: null
 }
 
-export const saveCropRecordsFormData = (formData) => async(dispatch) => {
-    // Step 1: update state in the reducer (state changes via setCropRecordsFormData)
-    dispatch(setCropRecordsFormData(formData));
-    // Step 2: dispatch the toast notification
-    dispatch(showToast({message: "Crop records has saved successfully",type: "success"}));
-};
-
 const cropRecordsSlice = createSlice({
     name: "crop-records-slice",
     initialState: {
-        cropRecordsForm: {
-            _id: null,
-            cropID: null,
-            plantingDate: null,
-            workDetails: [],
-        },
-        cropRecordsList: cropRecordsList,
+        cropRecordsForm: JSON.parse(JSON.stringify(cropRecordObject)), // Deep Copy
+        cropRecordsList: [],
         loadingFlags: {
             isSaving: false, // specific state for saving data
             isAwaitingResponse: false
@@ -58,44 +98,64 @@ const cropRecordsSlice = createSlice({
                 state.cropRecordsForm.workDetails[action.payload.workIndex]?.expenseList.splice(action.payload.expenseIndex,1);
             }
         },
-        setEmptyCropRecords: (state) => {
-            state.cropRecordsForm = {
-                id: null,
-                cropID: null,
-                plantingDate: null,
-                workDetails: [],
-            }
-        },
-        setCropRecordsFormData: (state,action) => {
+    },
+    extraReducers: (builder) => {
+        /* crop-record/get-crop-record-list api call */
+        builder
+        .addCase(getCropRecordList.pending,(state) => {
+            state.loadingFlags.isAwaitingResponse = true;
+        })
+        .addCase(getCropRecordList.fulfilled,(state,action) => {
+            state.loadingFlags.isAwaitingResponse = false;
+            state.cropRecordsList = action.payload;
+        })
+        .addCase(getCropRecordList.rejected,(state) => {
+            state.loadingFlags.isAwaitingResponse = false;
+        });
+
+        /* crop-record/get-crop-record-by-id api call */
+        builder
+        .addCase(getCropRecordById.pending,(state) => {
+            state.loadingFlags.isAwaitingResponse = true;
+        })
+        .addCase(getCropRecordById.fulfilled,(state,action) => {
+            state.loadingFlags.isAwaitingResponse = false;
             // directly mutate the state, and it will be updated immutably by immer
-            state.cropRecordsForm =  {
+            state.cropRecordsForm = {
                 ...state.cropRecordsForm,
                 ...action.payload
             };
+        })
+        .addCase(getCropRecordById.rejected,(state) => {
+            state.loadingFlags.isAwaitingResponse = false;
+        });
+
+        /* crop-record/save-crop-record api call */
+        builder
+        .addCase(saveCropRecord.pending,(state) => {
+            state.loadingFlags.isSaving = true;
+        })
+        .addCase(saveCropRecord.fulfilled,(state) => {
             state.loadingFlags.isSaving = false;
-        },
-        setLoadingFlags: (state,action) => {
-            state.loadingFlags = {
-                ...state.loadingFlags,
-                [action.payload.key]: action.payload.value
-            }
-        },
-        getCropRecordsByID: (state,action) => {
-            const cropRecordsId = Number(action.payload); // Ensure it's a number
-            const cropRecordsForm = state.cropRecordsList.find((cropRecords) => cropRecords.id === cropRecordsId);
-            if(cropRecordsForm) {
-                state.cropRecordsForm = cropRecordsForm;
-            }
-        },
-        deleteCropRecordsById: (state,action) => {
-            const cropRecordsId = Number(action.payload); // Ensure it's a number
-            let index = state.cropRecordsList.findIndex((cropRecords) => cropRecords.id === cropRecordsId);
-            if(index !== -1) {
-                state.cropRecordsList.splice(index,1);
-            }
-        }
+            state.cropRecordsForm = JSON.parse(JSON.stringify(cropRecordObject)); // deep copy
+        })
+        .addCase(saveCropRecord.rejected,(state) => {
+            state.loadingFlags.isSaving = false;
+        });
+
+        /* crop-record/delete-crop-record-by-id api call */
+        builder
+        .addCase(deleteCropRecordById.pending,(state) => {
+            state.loadingFlags.isAwaitingResponse = true;
+        })
+        .addCase(deleteCropRecordById.fulfilled,(state) => {
+            state.loadingFlags.isAwaitingResponse = false;
+        })
+        .addCase(deleteCropRecordById.rejected,(state) => {
+            state.loadingFlags.isAwaitingResponse = false;
+        });
     }
 });
 
-export const {addWorkRow,removeWorkRow,addExpenseRow,removeExpenseRow,setCropRecordsFormData,setLoadingFlags,getCropRecordsByID,deleteCropRecordsById,setEmptyCropRecords} = cropRecordsSlice.actions; 
+export const {addWorkRow,removeWorkRow,addExpenseRow,removeExpenseRow} = cropRecordsSlice.actions; 
 export default cropRecordsSlice.reducer;

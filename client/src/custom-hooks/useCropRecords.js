@@ -2,10 +2,10 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { addWorkRow,addExpenseRow,removeWorkRow,removeExpenseRow, getCropRecordsByID, setCropRecordsFormData, setLoadingFlags, saveCropRecordsFormData, setEmptyCropRecords, deleteCropRecordsById } from "../store/slices/cropRecordsSlice";
+import { addWorkRow,addExpenseRow,removeWorkRow,removeExpenseRow, getCropRecordList, getCropRecordById, saveCropRecord, deleteCropRecordById } from "../store/slices/cropRecordsSlice";
 
 
-const useCropRecords = (id) => {
+const useCropRecords = (_id) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const cropRecordsFormData = useSelector((state) => state.cropRecords?.cropRecordsForm);
@@ -16,11 +16,16 @@ const useCropRecords = (id) => {
         defaultValues: cropRecordsFormData
     });
 
+    // get crop record list on component mount
     useEffect(() => {
-        if(id) {
-            dispatch(getCropRecordsByID(id));
+        dispatch(getCropRecordList());
+    }, [dispatch]);
+
+    useEffect(() => {
+        if(_id) {
+            dispatch(getCropRecordById(_id));
         }
-    }, [id, dispatch]);
+    }, [_id, dispatch]);
 
     useEffect(() => {
         if(cropRecordsFormData) {
@@ -30,11 +35,14 @@ const useCropRecords = (id) => {
         }
     },[cropRecordsFormData,setValue]);
 
-    useEffect(() => {
-        return () => {
-            dispatch(setEmptyCropRecords());
-        };
-    }, [dispatch]);
+    const onSubmit = async(data) => {  
+        await dispatch(saveCropRecord(data));
+        navigate(-1);
+    };
+
+    const onDeleteCropRecords = (id) => {
+        dispatch(deleteCropRecordById(id));
+    }
 
     const onAddWork = () => {
         dispatch(addWorkRow());
@@ -51,21 +59,10 @@ const useCropRecords = (id) => {
     const onRemoveExpense = (workIndex,expenseIndex) => {
         dispatch(removeExpenseRow({workIndex,expenseIndex}));
     }
-    
-    const onSubmit = (data) => {
-        dispatch(setLoadingFlags({ key: "isSaving", value: true }));
-        dispatch(saveCropRecordsFormData(data));
-        navigate(-1);
-    };
 
     const onNavigate = (path,id) => {
         navigate(path+`/${id}`)
     }
-
-    const onDeleteCropRecords = (id) => {
-        dispatch(deleteCropRecordsById(id));
-    }
-
 
     return {
         register,

@@ -16,7 +16,7 @@ const useCrop = (_id) => {
         defaultValues: cropFormData 
     });
 
-    // Fetch crops on component mount
+    // get crop list on component mount
     useEffect(() => {
         dispatch(getCropList());
     }, [dispatch]);
