@@ -9,7 +9,7 @@ const PORT = process.env.APP_PORT;
 
 // Set CORS options
 const CORS_OPTIONS = {
-    origin: 'https://harvest-hub-client-lyart.vercel.app/', // frontend and the backend hosted on different domain, so maually handling the cors
+    origin: 'https://harvest-hub-client-lyart.vercel.app', // frontend and the backend hosted on different domain, so maually handling the cors
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
   };
