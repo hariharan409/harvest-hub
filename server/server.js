@@ -5,7 +5,7 @@ const { connectDB } = require("./src/config/db");
 const mainRouter = require("./src/routes/mainRouter");
 const app = express();
 dotenv.config();
-const PORT = process.env.APP_PORT;
+// const PORT = process.env.APP_PORT;
 
 // Enable CORS for all routes
 app.use(cors());
