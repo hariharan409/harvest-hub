@@ -15,7 +15,7 @@ export const CropRecordsTable = () => {
                             s no
                         </th>
                         <th scope="col" className="px-6 py-5 border-x">
-                            crop ID
+                            crop name
                         </th>
                         <th scope="col" className="px-6 py-5 border-x">
                             planting date
@@ -36,7 +36,7 @@ export const CropRecordsTable = () => {
                                     {index + 1}
                                 </td>
                                 <td className="px-6 py-4 border-x">
-                                    {cropRecord.cropID}
+                                    {cropRecord.cropID?.cropName}
                                 </td>
                                 <td className="px-6 py-4 border-x">
                                     {moment(cropRecord.plantingDate).format("DD-MMM-YYYY")}

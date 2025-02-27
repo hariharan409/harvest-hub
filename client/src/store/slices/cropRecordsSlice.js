@@ -46,11 +46,13 @@ export const deleteCropRecordById = createAsyncThunk("crop-record/delete-crop-re
         return rejectWithValue(errorMessage);
     }
 });
-
+/* crop record form */
 const cropRecordObject = {
     _id: null,
     cropID: null,
     plantingDate: null,
+    harvestingDate: null,
+    status: null,
     workDetails: [],
 }
 
@@ -64,6 +66,8 @@ const workObject = {
 const expenseObject = {
     expenseType: null,
     expenseAmount: null,
+    settledAmount: null,
+    pendingAmount: null,
     expenseDate: null,
     expenseDescription: null
 }

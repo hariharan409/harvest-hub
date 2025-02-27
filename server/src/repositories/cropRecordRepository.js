@@ -11,7 +11,7 @@ exports.saveCropRecord = async(cropRecord) => {
 
 exports.updateCropRecord = async(_id,cropRecord) => {
     try {
-        await CropRecord.findByIdAndUpdate(_id,cropRecord);
+        await CropRecord.findByIdAndUpdate(_id,cropRecord,{ runValidators: true });
     } catch (error) {
         throw new Error(error.message || error);
     }
@@ -19,7 +19,7 @@ exports.updateCropRecord = async(_id,cropRecord) => {
 
 exports.getCropRecordList = async() => {
     try {
-        const cropRecordList = await CropRecord.find({});
+        const cropRecordList = await CropRecord.find({}).populate("cropID");
         return cropRecordList;
     } catch (error) {
         throw new Error(error.message || error);

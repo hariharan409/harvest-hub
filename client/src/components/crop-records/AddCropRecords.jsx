@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useCrop, useCropRecords } from "../../custom-hooks";
-import {EpicButton, EpicDatepicker, EpicSelectDropdown, EpicTextInput} from "../index";
+import {EpicButton, EpicDatepicker, EpicRadioButton, EpicSelectDropdown, EpicTextInput} from "../index";
 import {MinusCircleIcon} from "@heroicons/react/20/solid";
 
 
@@ -18,6 +18,8 @@ const AddCropRecords = () => {
                         <EpicSelectDropdown label="select crop" name="cropID" list={cropList} valueKey="_id" displayKey="cropName" register={register} validation={{required: "crop name is required"}} placeholder="what's the crop name?" errors={errors.cropID} />
                     </div>
                     <EpicDatepicker label="planting-date" name="plantingDate" register={register} setValue={setValue} watch={watch} validation={{required: "planting date is required"}} placeholder="pick the planting date" errors={errors.plantingDate}  />
+                    <EpicDatepicker label="harvesting-date" name="harvestingDate" register={register} setValue={setValue} watch={watch} validation={undefined} placeholder="pick the harvesting date" errors={errors.harvestingDate}  />
+                    <EpicRadioButton label="status(crop harvested)" name="status" register={register} watch={watch}  />
                 </div>
                 {/* add work details button */}
                 <div className="flex justify-end">
@@ -51,7 +53,32 @@ const AddCropRecords = () => {
                                                     {/* expense type field */}
                                                     <EpicTextInput label="expense type" name={`workDetails[${workIndex}].expenseList[${expenseIndex}].expenseType`} register={register} validation={{required: `expense type is required for row - ${expenseIndex + 1}`}} placeholder="what's the expense type?" errors={(errors?.workDetails && errors?.workDetails[workIndex] && errors?.workDetails[workIndex]?.expenseList &&  errors?.workDetails[workIndex]?.expenseList[expenseIndex]) && errors?.workDetails[workIndex]?.expenseList[expenseIndex]?.expenseType}/>
                                                     {/* expense amount field */}
-                                                    <EpicTextInput label="expense amount" name={`workDetails[${workIndex}].expenseList[${expenseIndex}].expenseAmount`} register={register} validation={{required: `expense amount is required for row - ${expenseIndex + 1}`}} placeholder="what's the expense amount?" errors={(errors?.workDetails && errors?.workDetails[workIndex] && errors?.workDetails[workIndex]?.expenseList && errors?.workDetails[workIndex]?.expenseList[expenseIndex]) && errors?.workDetails[workIndex]?.expenseList[expenseIndex]?.expenseAmount}/>
+                                                    <EpicTextInput label="expense amount" name={`workDetails[${workIndex}].expenseList[${expenseIndex}].expenseAmount`} register={register} 
+                                                        validation={{
+                                                            required: `expense amount is required for row - ${expenseIndex + 1}`,
+                                                            validate: (value) => {
+                                                                if (value < 0) {
+                                                                    return `expense amount must be greater than 0 for row - ${expenseIndex + 1}`;
+                                                                }
+                                                            }
+                                                        }} 
+                                                        placeholder="what's the expense amount?" 
+                                                        errors={(errors?.workDetails && errors?.workDetails[workIndex] && errors?.workDetails[workIndex]?.expenseList && errors?.workDetails[workIndex]?.expenseList[expenseIndex]) && errors?.workDetails[workIndex]?.expenseList[expenseIndex]?.expenseAmount}
+                                                    />
+                                                    {/* settled amount field */}
+                                                    <EpicTextInput label="settled amount" name={`workDetails[${workIndex}].expenseList[${expenseIndex}].settledAmount`} register={register}  
+                                                        validation={{
+                                                            validate: (value) => {
+                                                                const settledAmount = parseInt(value);
+                                                                const expenseAmount = parseFloat(watch(`workDetails[${workIndex}].expenseList[${expenseIndex}].expenseAmount`));
+                                                                return settledAmount <= expenseAmount || "settled amount should be less than the expense amount";
+                                                            }
+                                                        }} 
+                                                        placeholder="what's the settled amount?" 
+                                                        errors={(errors?.workDetails && errors?.workDetails[workIndex] && errors?.workDetails[workIndex]?.expenseList && errors?.workDetails[workIndex]?.expenseList[expenseIndex]) && errors?.workDetails[workIndex]?.expenseList[expenseIndex]?.settledAmount}
+                                                    />
+                                                    {/* pending amount field */}
+                                                    <EpicTextInput label="pending amount" name={`workDetails[${workIndex}].expenseList[${expenseIndex}].pendingAmount`} value={watch(`workDetails[${workIndex}].expenseList[${expenseIndex}].expenseAmount`) - watch(`workDetails[${workIndex}].expenseList[${expenseIndex}].settledAmount`)} disabled={true} register={register} validation={undefined} />
                                                     {/* expense date picker */}
                                                     <EpicDatepicker label="expense-date" name={`workDetails[${workIndex}].expenseList[${expenseIndex}].expenseDate`} register={register} setValue={setValue} watch={watch} validation={{required: `expense date is required for row - ${workIndex + 1}`}} placeholder="pick the expense date" errors={(errors?.workDetails && errors?.workDetails[workIndex] && errors?.workDetails[workIndex]?.expenseList && errors?.workDetails[workIndex]?.expenseList[expenseIndex]) && errors?.workDetails[workIndex]?.expenseList[expenseIndex]?.expenseDate}  />
                                                     {/* expense description field */}

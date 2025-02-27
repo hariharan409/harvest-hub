@@ -8,25 +8,14 @@ const expenseSchema = new mongoose.Schema({
     expenseAmount: {
         type: Number,
         required: true,
-        min: [0,"amount cannot be negative"]
     },
     settledAmount: {
         type: Number,
         default: 0,
-        validate: {
-            validator: function(value) {
-                console.log(value,this.expenseAmount)
-                /* ensure that the settled amount is not greater than the total expense amount */
-                return value <= this.expenseAmount;
-            },
-            message: "settled amount cannot be greater than the expense amount"
-        }
     },
     pendingAmount: {
         type: Number,
-        default: function() {
-            return this.expenseAmount - this.settledAmount
-        }
+        default: 0
     },
     expenseDate: {
         type: Date,
@@ -61,9 +50,18 @@ const cropRecordSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
+    harvestingDate: {
+        type: Date,
+    },
+    // flag which is used to track the status of the crop
+    status: {
+        type: String,
+        enum: ['planted', 'harvested'],
+        message: "status must be either 'planted' or 'harvested'"
+    },
     /* one crop record can have many work details  */
     workDetails: [workDetailSchema] // embed work detail directly inside crop record
-});
+},{ strict: true });
 
 
 
