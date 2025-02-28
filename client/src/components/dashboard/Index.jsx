@@ -10,7 +10,7 @@ const Dashboard = () => {
                     <h1 className={`text-2xl capitalize font-bold text-center`}>
                         active crops
                     </h1>
-                    <h1 className={`xs:text-[50px] sm:text-[30px] lg:text-[40px] xl:text-[50px] text-[#915EFF] capitalize font-bold text-center animate-pulse text-nowrap`}>
+                    <h1 className={`text-[50px] md:text-[30px] lg:text-[40px] xl:text-[50px] text-[#915EFF] capitalize font-bold text-center animate-pulse text-nowrap`}>
                         2
                     </h1>
                 </TiltCard>
@@ -35,7 +35,7 @@ const Dashboard = () => {
                     <h1 className={`text-2xl capitalize font-bold text-center`}>
                         active crops exp
                     </h1>
-                    <h1 className={`xs:text-[50px] sm:text-[30px] lg:text-[40px] xl:text-[50px] text-[#915EFF] capitalize font-bold text-center animate-pulse text-nowrap`}>
+                    <h1 className={`text-[50px] md:text-[30px] lg:text-[40px] xl:text-[50px] text-[#915EFF] capitalize font-bold text-center animate-pulse text-nowrap`}>
                         150000 <span className="text-white">₹</span>
                     </h1>
                 </TiltCard>
@@ -44,7 +44,7 @@ const Dashboard = () => {
                     <h1 className={`text-2xl capitalize font-bold text-center`}>
                         amount settled
                     </h1>
-                    <h1 className={`xs:text-[50px] sm:text-[30px] lg:text-[40px] xl:text-[50px] text-[#915EFF] capitalize font-bold text-center animate-pulse text-nowrap`}>
+                    <h1 className={`text-[50px] md:text-[30px] lg:text-[40px] xl:text-[50px] text-[#915EFF] capitalize font-bold text-center animate-pulse text-nowrap`}>
                         100000 <span className="text-white">₹</span>
                     </h1>
                 </TiltCard>
@@ -53,7 +53,7 @@ const Dashboard = () => {
                     <h1 className={`text-2xl capitalize font-bold text-center`}>
                         pending to settle
                     </h1>
-                    <h1 className={`xs:text-[50px] sm:text-[30px] lg:text-[40px] xl:text-[50px] text-[#915EFF] capitalize font-bold text-center animate-pulse text-nowrap`}>
+                    <h1 className={`text-[50px] md:text-[30px] lg:text-[40px] xl:text-[50px] text-[#915EFF] capitalize font-bold text-center animate-pulse text-nowrap`}>
                         50000 <span className="text-white">₹</span>
                     </h1>
                 </TiltCard>
@@ -62,7 +62,7 @@ const Dashboard = () => {
                     <h1 className={`text-2xl capitalize font-bold text-center`}>
                         pending work task
                     </h1>
-                    <h1 className={`xs:text-[50px] sm:text-[30px] lg:text-[40px] xl:text-[50px] text-[#915EFF] capitalize font-bold text-center animate-pulse text-nowrap`}>
+                    <h1 className={`text-[50px] md:text-[30px] lg:text-[40px] xl:text-[50px] text-[#915EFF] capitalize font-bold text-center animate-pulse text-nowrap`}>
                         4
                     </h1>
                 </TiltCard>
