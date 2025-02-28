@@ -13,10 +13,10 @@ const expenseSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-    pendingAmount: {
-        type: Number,
-        default: 0
-    },
+    // pendingAmount: {
+    //     type: Number,
+    //     default: 0
+    // },
     expenseDate: {
         type: Date,
         required: true
