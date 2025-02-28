@@ -1,12 +1,12 @@
 import { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { setActiveNav, setScrolled } from "../store/slices/navbarSlice";
+import { setActiveNav, setScrolled, setToggleNav } from "../store/slices/navbarSlice";
 
 const useNavbar = () => {
     const location = useLocation();
     const dispatch = useDispatch();
-    const { activeNav, scrolled } = useSelector((state) => state.navbar);
+    const { activeNav, scrolled,toggleNav } = useSelector((state) => state.navbar);
 
     // Scroll event handler with useCallback to prevent unnecessary re-creations
     const handleScroll = useCallback(() => {
@@ -32,10 +32,16 @@ const useNavbar = () => {
         }
     };
 
+    const onNavToggle = (toggle) => {
+        dispatch(setToggleNav(toggle));
+    };
+
     return {
         activeNav,
         scrolled,
+        toggleNav,
         onNavClick,
+        onNavToggle
     };
 };
 
