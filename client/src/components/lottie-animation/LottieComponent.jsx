@@ -1,5 +1,5 @@
 import Lottie from "lottie-react";
-import { appleTreeAnimation, pageNotFound, } from "../../assets";
+import { appleTreeAnimation, pageNotFound,windAnimation } from "../../assets";
 
 export const AppleTreeAnimation = () => (
     <Lottie animationData={appleTreeAnimation} loop={true} style={{width: "100%"}} />
@@ -7,4 +7,8 @@ export const AppleTreeAnimation = () => (
 
 export const PageNotFoundAnimation = () => (
     <Lottie animationData={pageNotFound} loop={true} style={{width: "100%"}} />
+);
+
+export const WindAnimation = () => (
+    <Lottie animationData={windAnimation} loop={true} style={{width: "100%"}} />
 );
