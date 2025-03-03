@@ -13,7 +13,7 @@ const AddCropRecords = () => {
         <div className="bg-black-200 p-8 rounded-sm">
             <form onSubmit={handleSubmit(onSubmit)} className="mt-12 flex flex-col gap-8 capitalize">
                 {/* row-1 crop records*/}
-                <div className="flex gap-8">
+                <div className="flex flex-wrap gap-8">
                     <div className="w-48">
                         <EpicSelectDropdown label="select crop" name="cropID" list={cropList} valueKey="_id" displayKey="cropName" register={register} validation={{required: "crop name is required"}} placeholder="what's the crop name?" errors={errors.cropID} />
                     </div>

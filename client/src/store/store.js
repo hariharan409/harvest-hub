@@ -3,6 +3,7 @@ import navbarReducer from "./slices/navbarSlice";
 import cropReducer from "./slices/cropSlice";
 import cropRecordsReducer from "./slices/cropRecordsSlice";
 import toastReducer from "./slices/toastSlice";
+import dashboardReducer from "./slices/dashboardSlice";
 
 
 const store = configureStore({
@@ -10,7 +11,8 @@ const store = configureStore({
         navbar: navbarReducer,
         crop: cropReducer,
         toast: toastReducer,
-        cropRecords: cropRecordsReducer
+        cropRecords: cropRecordsReducer,
+        dashboard: dashboardReducer
     }
 });
 
