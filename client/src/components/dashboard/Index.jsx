@@ -15,7 +15,7 @@ const Dashboard = () => {
                     <h1 className={`text-[50px] md:text-[30px] lg:text-[40px] xl:text-[50px] text-[#915EFF] capitalize font-bold text-center animate-pulse text-nowrap`}>
                         {currentWeather.temperature} <span className="text-white">°C</span>
                     </h1>
-                    <span className="w-full text-end text-lg font-bold">{currentWeather.location}</span>
+                    <span className="w-full text-end text-xs font-bold">{currentWeather.location}</span>
                 </TiltCard>
                 {/* Card 2 */}
                 <TiltCard cardNo={2}>
@@ -26,7 +26,7 @@ const Dashboard = () => {
                     <h1 className={`text-[50px] md:text-[30px] lg:text-[40px] xl:text-[50px] text-[#915EFF] capitalize font-bold text-center animate-pulse text-nowrap`}>
                         {currentWind.speed} <span className="text-white">m/s</span>
                     </h1>
-                    <span className="w-full text-end text-lg font-bold">{currentWind.location}</span>
+                    <span className="w-full text-end text-xs font-bold">{currentWind.location}</span>
                 </TiltCard>
                 {/* Card 3 */}
                 <TiltCard cardNo={3}>
