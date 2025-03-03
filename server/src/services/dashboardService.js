@@ -15,3 +15,11 @@ exports.getWindReport = async() => {
         throw new Error(error.message || error);
     }
 }
+
+exports.getTodayForecast = async() => {
+    try {
+        return await dashboardRepository.getTodayForecast();
+    } catch (error) {
+        throw new Error(error.message || error);
+    }
+}
