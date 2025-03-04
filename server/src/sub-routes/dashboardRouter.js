@@ -16,5 +16,7 @@ const dashboardController = require("../controllers/dashboardController");
 app.get("/get-current-weather",dashboardController.getWeatherReport);
 app.get("/get-current-wind",dashboardController.getWindReport);
 app.get("/get-today-forecast",dashboardController.getTodayForecast);
+app.get("/get-active-crops-by-status",dashboardController.getActiveCropsByStatus);
+app.get("/get-active-crops-expense-by-status",dashboardController.getActiveCropsExpenseByStatus);
 
 module.exports = app;
