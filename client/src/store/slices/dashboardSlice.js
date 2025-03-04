@@ -38,12 +38,39 @@ export const getTodayForecast = createAsyncThunk("dashboard/get-today-forecast",
     }
 });
 
+export const getActiveCropsByStatus = createAsyncThunk("dashboard/get-active-crops-by-status",async(_,{dispatch,rejectWithValue}) => {
+    try {
+        const {data} = await dashboardApi.getActiveCropsByStatusApi();
+        if(data instanceof Array && data.length > 0) {
+            return data;
+        } 
+        return [];
+    } catch (error) {
+        const errorMessage = (error.message || error);
+        dispatch(showToast({message: errorMessage,type: "error"}));
+        return rejectWithValue(errorMessage);
+    }
+});
+
+export const getActiveCropsExpenseByStatus = createAsyncThunk("dashboard/get-active-crops-expense-by-status",async(_,{dispatch,rejectWithValue}) => {
+    try {
+        const {data} = await dashboardApi.getActiveCropsExpenseByStatusApi();
+        return data;
+    } catch (error) {
+        const errorMessage = (error.message || error);
+        dispatch(showToast({message: errorMessage,type: "error"}));
+        return rejectWithValue(errorMessage);
+    }
+});
+
 const dashboardSlice = createSlice({
     name: "dashboard",
     initialState: {
         currentWeather: {},
         currentWind: {},
         todayForecastList: [],
+        activeCropsList: [],
+        activeCropsExpense: {},
         loadingFlags: {
             isAwaitingResponse: false
         }
@@ -85,6 +112,32 @@ const dashboardSlice = createSlice({
             state.todayForecastList = action.payload;
         })
         .addCase(getTodayForecast.rejected,(state) => {
+            state.loadingFlags.isAwaitingResponse = false;
+        });
+
+        /* dashboard/get-active-crops-by-status */
+        builder
+        .addCase(getActiveCropsByStatus.pending,(state) => {
+            state.loadingFlags.isAwaitingResponse = true;
+        })
+        .addCase(getActiveCropsByStatus.fulfilled,(state,action) => {
+            state.loadingFlags.isAwaitingResponse = false;
+            state.activeCropsList = action.payload;
+        })
+        .addCase(getActiveCropsByStatus.rejected,(state) => {
+            state.loadingFlags.isAwaitingResponse = false;
+        });
+
+        /* dashboard/get-active-crops-expense-by-status */
+        builder
+        .addCase(getActiveCropsExpenseByStatus.pending,(state) => {
+            state.loadingFlags.isAwaitingResponse = true;
+        })
+        .addCase(getActiveCropsExpenseByStatus.fulfilled,(state,action) => {
+            state.loadingFlags.isAwaitingResponse = false;
+            state.activeCropsExpense = action.payload;
+        })
+        .addCase(getActiveCropsExpenseByStatus.rejected,(state) => {
             state.loadingFlags.isAwaitingResponse = false;
         });
     }

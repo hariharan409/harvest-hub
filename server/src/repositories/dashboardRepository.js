@@ -1,5 +1,6 @@
 const { default: axios } = require("axios");
 const moment = require("moment");
+const { CropRecord } = require("../models/cropRecordModel");
 
 exports.getWeatherReport = async() => {
     try {
@@ -68,3 +69,48 @@ exports.getTodayForecast = async() => {
         throw new Error(error.message || error);
     }
 } 
+
+exports.getActiveCropsByStatus = async() => {
+    try {
+        const cropRecordList = await CropRecord
+        // find all croprecords with status "planted"
+        .find({status: "planted"})
+        // populate only the 'cropname' field from the 'cropid' reference
+        .populate("cropID","cropName")
+        // convert the result into a plain javascript object for better performance
+        .lean()
+        // after the query, extract only the cropname from each populated record
+        .then((records) => records.map((record) => record.cropID.cropName));
+        return cropRecordList;
+    } catch (error) {
+        throw new Error(error.message || error);
+    }
+}
+
+exports.getActiveCropsExpenseByStatus = async() => {
+    try {
+        const expense = await CropRecord.aggregate([
+            // filter only records where status is "planted"
+            {$match: {status: "planted"}},
+            // unwind workDetails array to process each work entry separately
+            {$unwind: "$workDetails"},
+            // unwind expenseList array inside workDetails to process each expense entry separately
+            { $unwind: "$workDetails.expenseList" },
+            // group by null to calculate the total sum across all records
+            {
+                $group: {
+                    _id: null,
+                    totalExpenseAmount: { $sum: "$workDetails.expenseList.expenseAmount" },
+                    totalSettledAmount: { $sum: "$workDetails.expenseList.settledAmount" }
+                }
+            }
+            // ([result]) → destructures the first element from the records array
+        ]).then(([result]) => ({
+            totalExpenseAmount: result?.totalExpenseAmount || 0,
+            totalSettledAmount: result?.totalSettledAmount || 0
+        }));
+        return expense;
+    } catch (error) {
+        throw new Error(error.message || error);
+    }
+}

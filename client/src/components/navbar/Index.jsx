@@ -14,11 +14,11 @@ const NavBar = () => {
                 {/* left hand side element - column 1 */}
                 <div className="flex items-center gap-2">
                     <img src={manikandan} alt="profile-picture" className="w-9 h-9 object-contain rounded-[20%]" />
-                    <div className="animate-pulse">
-                        <p className='text-white text-[18px] font-bold cursor-pointer flex '>
+                    <div>
+                        <p className='text-white text-[12px] font-bold cursor-pointer flex uppercase'>
                             Manikandan
                         </p>
-                        <p className="text-white-100 text-xs uppercase">dk farms</p>
+                        <p className="text-gray-200 text-xs capitalize">dk farms</p>
                     </div>
                 </div>
                 {/* right hand side element - column 2 - only for web view */}
@@ -36,7 +36,7 @@ const NavBar = () => {
                 </ul>
                 {/* right hand side element - column 2 - only for mobile view */}
                 <div className='lg:hidden relative'>
-                    <img src={toggleNav ? closeIcon : menuIcon} alt='menu' className='w-[20px] h-[20px] object-contain' onClick={() => onNavToggle(!toggleNav)} />
+                    <img src={toggleNav ? closeIcon : menuIcon} alt='menu' className='w-[20px] h-[20px] object-contain cursor-pointer' onClick={() => onNavToggle(!toggleNav)} />
                     <div className={`${!toggleNav ? "hidden" : "flex"} black-gradient absolute top-10 right-0 min-w-[200px] z-10 rounded-xl`}>
                         <ul className='p-3 flex justify-end items-start flex-1 flex-col gap-4 bg-black-100 rounded-md'>
                             {

@@ -28,3 +28,21 @@ exports.getTodayForecast = async(_,response) => {
         sendResponse(response,500,false,error.message || error,null);
     }
 }
+
+exports.getActiveCropsByStatus = async(_,response) => {
+    try {
+        const data = await dashboardService.getActiveCropsByStatus();
+        sendResponse(response,200,true,"active crops list",data);
+    } catch (error) {
+        sendResponse(response,500,false,error.message || error,null);
+    }
+}
+
+exports.getActiveCropsExpenseByStatus = async(_,response) => {
+    try {
+        const data = await dashboardService.getActiveCropsExpenseByStatus();
+        sendResponse(response,200,true,"active crops expense",data);
+    } catch (error) {
+        sendResponse(response,500,false,error.message || error,null);
+    }
+}

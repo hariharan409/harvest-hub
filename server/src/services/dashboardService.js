@@ -23,3 +23,19 @@ exports.getTodayForecast = async() => {
         throw new Error(error.message || error);
     }
 }
+
+exports.getActiveCropsByStatus = async() => {
+    try {
+        return await dashboardRepository.getActiveCropsByStatus();
+    } catch (error) {
+        throw new Error(error.message || error);
+    }
+}
+
+exports.getActiveCropsExpenseByStatus = async() => {
+    try {
+        return await dashboardRepository.getActiveCropsExpenseByStatus();
+    } catch (error) {
+        throw new Error(error.message || error);
+    }
+}

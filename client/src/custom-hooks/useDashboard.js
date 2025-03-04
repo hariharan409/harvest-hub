@@ -1,25 +1,27 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getTodayForecast, getWeatherReport, getWindReport } from "../store/slices/dashboardSlice";
+import { getTodayForecast, getWeatherReport, getWindReport , getActiveCropsByStatus, getActiveCropsExpenseByStatus} from "../store/slices/dashboardSlice";
 
 
 
 const useDashboard = () => {
     const dispatch = useDispatch();
-    const currentWeather = useSelector((state) => state.dashboard?.currentWeather);
-    const currentWind = useSelector((state) => state.dashboard?.currentWind);
-    const todayForecastList = useSelector((state) => state.dashboard?.todayForecastList);
+    const {currentWeather,currentWind,todayForecastList,activeCropsList,activeCropsExpense} = useSelector((state) => state.dashboard);
 
     useEffect(() => {
         dispatch(getWeatherReport());
         dispatch(getWindReport());
         dispatch(getTodayForecast());
+        dispatch(getActiveCropsByStatus());
+        dispatch(getActiveCropsExpenseByStatus());
     },[]);
 
     return {
         currentWeather,
         currentWind,
-        todayForecastList
+        todayForecastList,
+        activeCropsList,
+        activeCropsExpense
     }
 }
 

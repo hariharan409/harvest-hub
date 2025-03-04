@@ -3,6 +3,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const { connectDB } = require("./src/config/db");
 const mainRouter = require("./src/routes/mainRouter");
+const swaggerDocs = require("./src/utils/swagger");
 const app = express();
 dotenv.config();
 const PORT = process.env.APP_PORT;
@@ -25,4 +26,6 @@ app.use("/harvest-hub",mainRouter);
 
 app.listen(PORT,() => {
     console.log(`harvest hub server running on port ${PORT}`);
+
+    swaggerDocs(app,PORT);
 });
