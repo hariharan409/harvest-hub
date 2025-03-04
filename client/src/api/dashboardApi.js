@@ -31,8 +31,30 @@ const getTodayForecastApi = async() => {
     }
 }
 
+const getActiveCropsByStatusApi = async() => {
+    try {
+        const response = await axiosInstance.get("dashboard/get-active-crops-by-status");
+        return response.data;
+    } catch (error) {
+        const errorMessage = error?.response?.data.message || error.message || error;
+        throw new Error(errorMessage);
+    }
+}
+
+const getActiveCropsExpenseByStatusApi = async() => {
+    try {
+        const response = await axiosInstance.get("dashboard/get-active-crops-expense-by-status");
+        return response.data;
+    } catch (error) {
+        const errorMessage = error?.response?.data.message || error.message || error;
+        throw new Error(errorMessage);
+    }
+}
+
 export default {
     getWeatherReportApi,
     getWindReportApi,
-    getTodayForecastApi
+    getTodayForecastApi,
+    getActiveCropsByStatusApi,
+    getActiveCropsExpenseByStatusApi
 }

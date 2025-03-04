@@ -3,7 +3,7 @@ import { WindAnimation } from "../lottie-animation/LottieComponent";
 import { TiltCard } from "./TiltCard";
 
 const Dashboard = () => {
-    const {currentWeather,currentWind,todayForecastList} = useDashboard();
+    const {currentWeather,currentWind,todayForecastList,activeCropsList,activeCropsExpense} = useDashboard();
 
     return (
         <div className="relative p-4">
@@ -59,8 +59,13 @@ const Dashboard = () => {
                             <div className='w-1 h-full violet-gradient' />
                         </div>
                         <ul className="list-disc marker:text-white pl-5 overflow-y-auto my-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] text-[#915EFF] text-[20px] capitalize font-bold animate-pulse">
-                            <li>peanut</li>
-                            <li>chilli</li>
+                            {
+                                activeCropsList.map((crop,index) => {
+                                    return(
+                                        <li key={index}>{crop}</li>
+                                    )
+                                })
+                            }
                         </ul>
                     </div>
                 </TiltCard>
@@ -70,7 +75,7 @@ const Dashboard = () => {
                         active crops exp
                     </h1>
                     <h1 className={`text-[50px] md:text-[30px] lg:text-[40px] xl:text-[50px] text-[#915EFF] capitalize font-bold text-center animate-pulse text-nowrap`}>
-                        150000 <span className="text-white">₹</span>
+                        {activeCropsExpense.totalExpenseAmount} <span className="text-white">₹</span>
                     </h1>
                 </TiltCard>
                 {/* Card 6 */}
@@ -79,7 +84,7 @@ const Dashboard = () => {
                         amount settled
                     </h1>
                     <h1 className={`text-[50px] md:text-[30px] lg:text-[40px] xl:text-[50px] text-[#915EFF] capitalize font-bold text-center animate-pulse text-nowrap`}>
-                        100000 <span className="text-white">₹</span>
+                        {activeCropsExpense.totalSettledAmount} <span className="text-white">₹</span>
                     </h1>
                 </TiltCard>
             </div>
