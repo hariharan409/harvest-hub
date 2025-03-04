@@ -13,6 +13,7 @@ import EpicButton from "./reusable-components/button/Button";
 import EpicSelectDropdown from "./reusable-components/form-controls/EpicSelectDropdown";
 import EpicDatepicker from "./reusable-components/form-controls/EpicDatepicker";
 import EpicRadioButton from "./reusable-components/form-controls/EpicRadioButton";
+import Pagination from "./reusable-components/pagination/Pagination";
 
 export {
     Dashboard,
@@ -29,5 +30,6 @@ export {
     EpicButton,
     EpicSelectDropdown,
     EpicDatepicker,
-    EpicRadioButton
+    EpicRadioButton,
+    Pagination
 }

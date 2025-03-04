@@ -1,10 +1,12 @@
 import moment from "moment";
-import { useCropRecords } from "../../custom-hooks"
-import EpicButton from "../reusable-components/button/Button";
+import { useCropRecords, usePagination } from "../../custom-hooks"
+import {Pagination,EpicButton} from "../index";
 
 
 export const CropRecordsTable = () => {
     const {cropRecordsList,onNavigate,onDeleteCropRecords} = useCropRecords();
+    // pagination logic via custom hook
+    const {currentItems,pageCount,offset,handlePageChange} = usePagination(cropRecordsList);
 
     return(
         <div className="relative overflow-x-auto shadow-md max-h-[70%]">
@@ -30,10 +32,10 @@ export const CropRecordsTable = () => {
                 </thead>
                 <tbody>
                     {
-                        cropRecordsList.map((cropRecord,index) => (
+                        currentItems.map((cropRecord,index) => (
                             <tr key={cropRecord._id} className="capitalize border-y text-[#915EFF]">
                                 <td className="px-6 py-4 border-x">
-                                    {index + 1}
+                                    {offset + index + 1}
                                 </td>
                                 <td className="px-6 py-4 border-x">
                                     {cropRecord.cropID?.cropName}
@@ -51,9 +53,10 @@ export const CropRecordsTable = () => {
                             </tr>
                         ))
                     }
-                    
                 </tbody>
             </table>
+            {/* using reusable Pagination component */}
+            <Pagination pageCount={pageCount} onPageChange={handlePageChange} />
         </div>
     )
 }
