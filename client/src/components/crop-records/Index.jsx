@@ -17,11 +17,14 @@ const CropRecords = () => {
             {/* row 1 */}
             <div className="flex justify-between">
                 <div class="inline-flex rounded-md shadow-xs mb-2" role="group">
-                    <button type="button" onClick={() => onStatusChange("planted")}   className={`px-4 text-sm font-medium ${statusType === "planted" && "bg-tertiary"} rounded-l-2xl border-tertiary border-2`}>
+                    <button type="button" onClick={() => onStatusChange("planted")} className={`px-4 text-sm font-medium ${statusType === "planted" && "bg-tertiary"} rounded-l-2xl border-tertiary border-2`}>
                         Planted
                     </button>
-                    <button type="button" onClick={() => onStatusChange("harvested")} className={`px-4 text-sm font-medium ${statusType === "harvested" && "bg-tertiary"} rounded-r-2xl border-tertiary border-2`}>
+                    <button type="button" onClick={() => onStatusChange("harvested")} className={`px-4 text-sm font-medium ${statusType === "harvested" && "bg-tertiary"} border-tertiary border-2`}>
                         Harvested
+                    </button>
+                    <button type="button" onClick={() => onStatusChange("others")} className={`px-4 text-sm font-medium ${statusType === "others" && "bg-tertiary"} rounded-r-2xl border-tertiary border-2`}>
+                        others
                     </button>
                 </div>
                 <EpicButton label="add" onClick={() => onNavigate("/crop-records/add-crop-records")} varient="greenVarient" />

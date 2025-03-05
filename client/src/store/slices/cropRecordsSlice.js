@@ -39,7 +39,7 @@ export const deleteCropRecordById = createAsyncThunk("crop-record/delete-crop-re
     try {
         await cropRecordApi.deleteCropRecordByIdApi(_id);
         dispatch(showToast({message: "crop record has deleted successfully",type: "success"}));
-        await dispatch(getCropRecordList());
+        await dispatch(getCropRecordList("planted"));
     } catch (error) {
         const errorMessage = (error.message || error);
         dispatch(showToast({message: errorMessage,type: "error"}));
@@ -162,6 +162,7 @@ const cropRecordsSlice = createSlice({
         })
         .addCase(deleteCropRecordById.fulfilled,(state) => {
             state.loadingFlags.isAwaitingResponse = false;
+            state.statusType = "planted";
         })
         .addCase(deleteCropRecordById.rejected,(state) => {
             state.loadingFlags.isAwaitingResponse = false;

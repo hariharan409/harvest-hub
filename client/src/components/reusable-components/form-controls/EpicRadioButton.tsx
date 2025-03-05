@@ -13,20 +13,20 @@ interface EpicRadioButtonProps {
 
 }
 
-const EpicRadioButton: React.FC<EpicRadioButtonProps> = ({label,name,register,watch,errors,customClassNames,...otherProps}) => {
+const EpicRadioButton: React.FC<EpicRadioButtonProps> = ({label,name,register,watch,validation,errors,customClassNames,...otherProps}) => {
 
     return(
         <label className="flex flex-col">
             <span className='text-white font-medium mb-4'>{label}</span>
             <div className="flex justify-center items-center gap-6 h-full">
-                {/* will make this values planted & harvested into dynamic on future */}
+                {/* will make this values planted,harvested or others into dynamic on future */}
                 {/* yes radio button */}
                 <label className="flex gap-2 items-center">
                     <span className='text-white font-medium'>yes</span>
                     <input 
                         type="radio"
                         value="harvested"
-                        {...register(name)}
+                        {...register(name,validation)}
                         className={`w-7 h-7 bg-tertiary text-white rounded-lg outline-none border-none font-medium ${customClassNames}`}
                         {...otherProps}
                     />
@@ -37,7 +37,18 @@ const EpicRadioButton: React.FC<EpicRadioButtonProps> = ({label,name,register,wa
                     <input 
                         type="radio"
                         value="planted"
-                        {...register(name)}
+                        {...register(name,validation)}
+                        className={`w-7 h-7 bg-tertiary text-white rounded-lg outline-none border-none font-medium ${customClassNames}`}
+                        {...otherProps}
+                    />
+                </label>
+                {/* others radio button */}
+                <label className="flex gap-2 items-center">
+                    <span className='text-white font-medium'>others</span>
+                    <input 
+                        type="radio"
+                        value="others"
+                        {...register(name,validation)}
                         className={`w-7 h-7 bg-tertiary text-white rounded-lg outline-none border-none font-medium ${customClassNames}`}
                         {...otherProps}
                     />

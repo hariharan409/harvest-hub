@@ -19,7 +19,7 @@ const AddCropRecords = () => {
                     </div>
                     <EpicDatepicker label="planting-date" name="plantingDate" register={register} setValue={setValue} watch={watch} validation={{required: "planting date is required"}} placeholder="pick the planting date" errors={errors.plantingDate}  />
                     <EpicDatepicker label="harvesting-date" name="harvestingDate" register={register} setValue={setValue} watch={watch} validation={undefined} placeholder="pick the harvesting date" errors={errors.harvestingDate}  />
-                    <EpicRadioButton label="status(crop harvested)" name="status" register={register} watch={watch}  />
+                    <EpicRadioButton label="status(crop harvested)" name="status" register={register} watch={watch} validation={{required: "status is required"}} errors={errors.status}  />
                 </div>
                 {/* add work details button */}
                 <div className="flex justify-end">

@@ -38,7 +38,10 @@ const useCropRecords = (_id) => {
     },[cropRecordsFormData,setValue]);
 
     useEffect(() => {
-        return () => dispatch(refreshCropRecordForm());
+        return () => {
+            dispatch(refreshCropRecordForm());
+            dispatch(changeStatusType("planted"));
+        };
     },[]);
 
     /* crop record table list data change depends on the status */
@@ -50,6 +53,7 @@ const useCropRecords = (_id) => {
     const onSubmit = async(data) => {  
         const response = await dispatch(saveCropRecord(data));
         if(saveCropRecord.fulfilled.match(response)) {
+            dispatch(changeStatusType("planted"));
             navigate(-1);
         }
     };
