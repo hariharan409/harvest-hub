@@ -23,6 +23,7 @@ export const App = () => {
                                 <Route path="*" element={<PageNotFound />} />
                             </Routes>
                         </div>
+                        {/* <Footer /> */}
                     </div>
                 </div>
             </Router>
