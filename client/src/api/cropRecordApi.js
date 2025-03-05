@@ -1,9 +1,11 @@
 import { axiosInstance } from "./axiosInstance";
 
 
-const getCropRecordListApi = async() => {
+const getCropRecordListApi = async(status) => {
     try {
-        const response = await axiosInstance.get("crop-record/get-crop-record-list");
+        const response = await axiosInstance.get("crop-record/get-crop-record-list",{
+            params: new URLSearchParams({status: status})
+        });
         return response.data;
     } catch (error) {
         const errorMessage = error?.response?.data.message || error.message || error;

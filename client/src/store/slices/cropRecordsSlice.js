@@ -2,9 +2,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { showToast } from "./toastSlice";
 import cropRecordApi from "../../api/cropRecordApi";
 
-export const getCropRecordList = createAsyncThunk("crop-record/get-crop-record-list",async(_,{dispatch,rejectWithValue}) => {
+export const getCropRecordList = createAsyncThunk("crop-record/get-crop-record-list",async(status,{dispatch,rejectWithValue}) => {
     try {
-        const {data} = await cropRecordApi.getCropRecordListApi();
+        const {data} = await cropRecordApi.getCropRecordListApi(status);
         return data;
     } catch (error) {
         const errorMessage = (error.message || error);
@@ -77,6 +77,7 @@ const cropRecordsSlice = createSlice({
     initialState: {
         cropRecordsForm: JSON.parse(JSON.stringify(cropRecordObject)), // Deep Copy
         cropRecordsList: [],
+        statusType: "planted",
         loadingFlags: {
             isSaving: false, // specific state for saving data
             isAwaitingResponse: false
@@ -105,6 +106,9 @@ const cropRecordsSlice = createSlice({
         },
         refreshCropRecordForm: (state) => {
             state.cropRecordsForm = state.refreshState;
+        },
+        changeStatusType: (state,action) => {
+            state.statusType = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -165,5 +169,5 @@ const cropRecordsSlice = createSlice({
     }
 });
 
-export const {addWorkRow,removeWorkRow,addExpenseRow,removeExpenseRow,refreshCropRecordForm} = cropRecordsSlice.actions; 
+export const {addWorkRow,removeWorkRow,addExpenseRow,removeExpenseRow,refreshCropRecordForm,changeStatusType} = cropRecordsSlice.actions; 
 export default cropRecordsSlice.reducer;

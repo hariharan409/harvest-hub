@@ -17,9 +17,9 @@ exports.updateCropRecord = async(_id,cropRecord) => {
     }
 }
 
-exports.getCropRecordList = async() => {
+exports.getCropRecordList = async(status) => {
     try {
-        const cropRecordList = await CropRecord.find({}).populate("cropID","-cropImage");
+        const cropRecordList = await CropRecord.find({status: status}).populate("cropID","-cropImage");
         return cropRecordList;
     } catch (error) {
         throw new Error(error.message || error);
