@@ -12,9 +12,9 @@ exports.saveCropRecord = async(cropRecord) => {
     }
 }
 
-exports.getCropRecordList = async() => {
+exports.getCropRecordList = async(status) => {
     try {
-        return await cropRecordRepository.getCropRecordList();
+        return await cropRecordRepository.getCropRecordList(status);
     } catch (error) {
         throw new Error(error.message || error);
     }

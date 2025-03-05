@@ -11,9 +11,13 @@ exports.saveCropRecord = async(request,response) => {
     }
 }
 
-exports.getCropRecordList = async(_,response) => {
+exports.getCropRecordList = async(request,response) => {
     try {
-        const data = await cropRecordService.getCropRecordList();
+        const {status} = request.query;
+        if(!status) {
+            throw new Error("status cannot be empty");
+        }
+        const data = await cropRecordService.getCropRecordList(status);
         sendResponse(response,200,true,"crop record list",data);
     } catch (error) {
         sendResponse(response,500,false,error.message || error,null);

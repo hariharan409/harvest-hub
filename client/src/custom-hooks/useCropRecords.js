@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { addWorkRow,addExpenseRow,removeWorkRow,removeExpenseRow, getCropRecordList, getCropRecordById, saveCropRecord, deleteCropRecordById,refreshCropRecordForm } from "../store/slices/cropRecordsSlice";
+import { addWorkRow,addExpenseRow,removeWorkRow,removeExpenseRow, getCropRecordList, getCropRecordById, saveCropRecord, deleteCropRecordById,refreshCropRecordForm,changeStatusType } from "../store/slices/cropRecordsSlice";
 
 
 const useCropRecords = (_id) => {
@@ -11,6 +11,7 @@ const useCropRecords = (_id) => {
     const cropRecordsFormData = useSelector((state) => state.cropRecords?.cropRecordsForm);
     const cropRecordsList = useSelector((state) => state.cropRecords?.cropRecordsList);
     const loadingFlags = useSelector((state) => state.cropRecords?.loadingFlags);
+    const statusType = useSelector((state) => state.cropRecords?.statusType);
     const {register,handleSubmit,setValue,watch,formState: {errors}} = useForm({
         // set initial values from redux store
         defaultValues: cropRecordsFormData
@@ -18,7 +19,8 @@ const useCropRecords = (_id) => {
 
     // get crop record list on component mount
     useEffect(() => {
-        dispatch(getCropRecordList());
+        const initialStatus = "planted";
+        dispatch(getCropRecordList(initialStatus));
     }, [dispatch]);
 
     useEffect(() => {
@@ -36,13 +38,22 @@ const useCropRecords = (_id) => {
     },[cropRecordsFormData,setValue]);
 
     useEffect(() => {
-        return () => dispatch(refreshCropRecordForm());
+        return () => {
+            dispatch(refreshCropRecordForm());
+            dispatch(changeStatusType("planted"));
+        };
     },[]);
+
+    /* crop record table list data change depends on the status */
+    const onStatusChange = (status) => {
+        dispatch(getCropRecordList(status));
+        dispatch(changeStatusType(status));
+    }
 
     const onSubmit = async(data) => {  
         const response = await dispatch(saveCropRecord(data));
-        console.log(response);
         if(saveCropRecord.fulfilled.match(response)) {
+            dispatch(changeStatusType("planted"));
             navigate(-1);
         }
     };
@@ -86,7 +97,9 @@ const useCropRecords = (_id) => {
         cropRecordsFormData,
         cropRecordsList,
         onNavigate,
-        onDeleteCropRecords
+        onDeleteCropRecords,
+        onStatusChange,
+        statusType
     }
 }
 

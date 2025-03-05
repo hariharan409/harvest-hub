@@ -56,8 +56,8 @@ const cropRecordSchema = new mongoose.Schema({
     // flag which is used to track the status of the crop
     status: {
         type: String,
-        enum: ['planted', 'harvested'],
-        message: "status must be either 'planted' or 'harvested'"
+        enum: ['planted', 'harvested', 'others'],
+        message: "status must be either 'planted' or 'harvested' or 'others'"
     },
     /* one crop record can have many work details  */
     workDetails: [workDetailSchema] // embed work detail directly inside crop record
