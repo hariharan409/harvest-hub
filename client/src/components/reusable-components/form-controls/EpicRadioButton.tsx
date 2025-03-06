@@ -20,23 +20,21 @@ const EpicRadioButton: React.FC<EpicRadioButtonProps> = ({label,name,register,wa
             <span className='text-white font-medium mb-4'>{label}</span>
             <div className="flex justify-center items-center gap-6 h-full">
                 {/* will make this values planted,harvested or others into dynamic on future */}
-                {/* yes radio button */}
                 <label className="flex gap-2 items-center">
-                    <span className='text-white font-medium'>yes</span>
+                    <span className='text-white font-medium'>planted</span>
                     <input 
                         type="radio"
-                        value="harvested"
+                        value="planted"
                         {...register(name,validation)}
                         className={`w-7 h-7 bg-tertiary text-white rounded-lg outline-none border-none font-medium ${customClassNames}`}
                         {...otherProps}
                     />
                 </label>
-                {/* no radio button */}
                 <label className="flex gap-2 items-center">
-                    <span className='text-white font-medium'>no</span>
+                    <span className='text-white font-medium'>harvested</span>
                     <input 
                         type="radio"
-                        value="planted"
+                        value="harvested"
                         {...register(name,validation)}
                         className={`w-7 h-7 bg-tertiary text-white rounded-lg outline-none border-none font-medium ${customClassNames}`}
                         {...otherProps}
