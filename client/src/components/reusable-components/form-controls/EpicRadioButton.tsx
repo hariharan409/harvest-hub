@@ -18,7 +18,7 @@ const EpicRadioButton: React.FC<EpicRadioButtonProps> = ({label,name,register,wa
     return(
         <label className="flex flex-col">
             <span className='text-white font-medium mb-4'>{label}</span>
-            <div className="flex justify-center items-center gap-6 h-full">
+            <div className="flex flex-col md:flex-row justify-center items-start gap-6 h-full">
                 {/* will make this values planted,harvested or others into dynamic on future */}
                 <label className="flex gap-2 items-center">
                     <span className='text-white font-medium'>planted</span>
