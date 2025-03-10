@@ -10,7 +10,6 @@ const generateEmbedding = async(text) => {
         });
         return result;  // The resulting embedding vector for the text
     } catch (error) {
-        console.log(error.message || error);
         throw new Error(error.message || error);
     }
 }
