@@ -53,6 +53,10 @@ const cropRecordSchema = new mongoose.Schema({
     harvestingDate: {
         type: Date,
     },
+    embedding: {
+        type: [Number], // array of numbers for vector storage
+        required: false, // optional, only available after embeddings are generated
+    },
     // flag which is used to track the status of the crop
     status: {
         type: String,

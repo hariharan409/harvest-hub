@@ -1,7 +1,13 @@
 const cropRecordRepository = require("../repositories/cropRecordRepository"); 
+const embeddingService = require("./embeddingService");
 
 exports.saveCropRecord = async(cropRecord) => {
     try {
+        // generate embeddings for query-based fields
+        cropRecord.embedding = await embeddingService.generateEmbedding(
+            `${JSON.stringify(cropRecord)}`
+        );
+
         if(cropRecord._id) {
             await cropRecordRepository.updateCropRecord(cropRecord._id,cropRecord);
         } else {
