@@ -20,11 +20,18 @@ exports.getChatResponseFromRAG = async(query) => {
                 // Project specific columns (fields) in the result
                 $project: {
                     status: 1,        // Include status
+                    embedding: 1
                 }
             }
         ]);
 
-        return result.length > 0 ? result : "We dont have that data at the moment";
+         // Calculate the cosine similarity score for each result
+         const resultsWithScores = result.map(item => {
+            const score = embeddingService.cosineSimilarity(queryEmbedding, item.embedding);
+            return { status: item.status, score };
+        });
+
+        return resultsWithScores.length > 0 ? resultsWithScores : "We don't have that data at the moment";
     } catch (error) {
         throw new Error(error.message || error);
     }
