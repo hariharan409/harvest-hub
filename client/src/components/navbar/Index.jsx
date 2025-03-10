@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { closeIcon, manikandan, menuIcon } from "../../assets";
+import { closeIcon, hari, menuIcon } from "../../assets";
 import { NAV_LINKS } from "../../constants";
 import {styles} from "../../styles";
 import {useNavbar} from "../../custom-hooks";
@@ -13,12 +13,12 @@ const NavBar = () => {
             <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
                 {/* left hand side element - column 1 */}
                 <div className="flex items-center gap-2">
-                    <img src={manikandan} alt="profile-picture" className="w-9 h-9 object-contain rounded-[20%]" />
+                    <img src={hari} alt="profile-picture" className="w-9 h-9 object-contain rounded-[20%]" />
                     <div>
                         <p className='text-white text-[12px] font-bold cursor-pointer flex uppercase'>
-                            Manikandan
+                            Hariharan
                         </p>
-                        <p className="text-gray-200 text-xs capitalize">dk farms</p>
+                        <p className="text-gray-200 text-xs capitalize">black code</p>
                     </div>
                 </div>
                 {/* right hand side element - column 2 - only for web view */}

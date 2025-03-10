@@ -1,4 +1,4 @@
-import manikandan from "./navbar/mani-keppel.jpg";
+import hari from "./navbar/hari-pic.jpg";
 import closeIcon from "./navbar/close.svg";
 import menuIcon from "./navbar/menu.svg";
 //lottie
@@ -7,7 +7,7 @@ import pageNotFound from "./lottie/page-not-found.json";
 import windAnimation from "./lottie/wind-animation.json";
 
 export {
-    manikandan,
+    hari,
     closeIcon,
     menuIcon,
     //lottie
