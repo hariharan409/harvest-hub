@@ -16,7 +16,7 @@ const NavBar = () => {
                     <img src={manikandan} alt="profile-picture" className="w-9 h-9 object-contain rounded-[20%]" />
                     <div>
                         <p className='text-white text-[12px] font-bold cursor-pointer flex uppercase'>
-                            Manikandan
+                            Hariharan
                         </p>
                         <p className="text-gray-200 text-xs capitalize">dk farms</p>
                     </div>
