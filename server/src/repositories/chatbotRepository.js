@@ -18,13 +18,6 @@ exports.getChatResponseFromRAG = async(query) => {
                     limit: 10                 // Get the most relevant crop record
                 }
             },
-            // {
-            //     // Project specific columns (fields) in the result
-            //     $project: {
-            //         status: 1,        // Include status
-            //         embedding: 1
-            //     }
-            // }
         ]);
 
          // Calculate the cosine similarity score for each result
@@ -47,34 +40,38 @@ const generateRagResponse = async(cropRecordList,userPrompt) => {
         Status: ${crop.status}
         Planting Date: ${crop.plantingDate.toISOString().split("T")[0]}
         Work Details: ${JSON.stringify(crop.workDetails)}
-        Expense Details: ${JSON.stringify(crop.expenseList)}
       `).join("\n");
 
       const prompt = `
-        You are an AI that provides structured responses based on farming data.
-        
-        Relevant Data:
-        ${cropData}
+        JSON Data:
+        (${cropData})
 
-        User Query: "${userPrompt}"
-        
-        Format the response naturally based on the user's query.
-        AI Response:
+        QUESTION:
+        (${userPrompt})
+
+        INSTRUCTIONS:
+        Answer the users QUESTION using the JSON DATA above.
+        Keep your answer ground in the facts of the JSON.
+        If the JSON doesn’t contain the facts to answer the QUESTION return {NONE}
+        You are given a relevant data about farming. Answer the question only based on this information. Do not use any additional information.
+        Only give me one word answer.
     `;
 
-    const result = await hf.textGeneration({
-        model: "gpt2",
-        inputs: prompt,
-        parameters: { 
-            max_new_tokens: 200,
-            temperature: 0.8,  // Increase randomness (default is 1.0)
-            top_p: 0.9,        // Use nucleus sampling
-            repetition_penalty: 1.2, // Penalize word repetition
-            do_sample: true,   // Enable sampling for varied responses
-        },
-    });
+    const chatCompletion = await hf.chatCompletion({
+        model: "meta-llama/Llama-3.2-3B-Instruct",
+        messages: [
+            {
+                role: "user",
+                content: prompt
+            }
+        ],
+        provider: "sambanova",
+        temperature: 0.5,
+        max_tokens: 2048,
+        top_p: 0.7,
 
-    console.log(result)
+    });
     
-    return result.generated_text.replace(prompt, "").trim();
+    console.log(chatCompletion.choices[0].message);
+    return chatCompletion.choices[0].message;    
 }
